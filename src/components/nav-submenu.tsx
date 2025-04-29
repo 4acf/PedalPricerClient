@@ -19,11 +19,25 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from "@/components/ui/sidebar"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+} from "@/components/ui/command"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 import { ItemType } from "@/api/constants"
 import { useEffect, useState } from "react"
 import { ItemPreview } from "@/api/models"
 import { GetInfo } from "@/api/api"
-
+  
 type BrandOption = {
     label: string,
     options: ItemPreview[],
@@ -41,6 +55,8 @@ export function NavSubmenu({
     }
 }) {
 
+    const [open, setOpen] = useState<boolean>(false);
+    const [label, setLabel] = useState<string>("");
     const [brandOptions, setBrandOptions] = useState<BrandOption[]>([]);
 
     useEffect(() => {
@@ -80,35 +96,62 @@ export function NavSubmenu({
             defaultOpen={item.isActive}
             className="group/collapsible"
         >
-        <SidebarMenuItem>
-            <CollapsibleTrigger asChild>
-            <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
-                <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-            </SidebarMenuButton>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-            <SidebarMenuSub className="py-4">
-                <Select>
-                <SelectTrigger className="w-[254px]">
-                    <SelectValue placeholder="Select..." />
-                </SelectTrigger>
-                <SelectContent>
-                    {brandOptions.map((brandOption) => (
-                        <SelectGroup>
-                            <SelectLabel>{brandOption.label}</SelectLabel>
-                            {brandOption.options.map((option) => (
-                                <SelectItem value={option.id}>{option.name}</SelectItem>
-                            ))}
-                        </SelectGroup>
-                    ))}
-                </SelectContent>
-                </Select>
-                <Button variant="outline" className="mt-1 mb-1">Add {item.singular}</Button>
-            </SidebarMenuSub>
-            </CollapsibleContent>
-        </SidebarMenuItem>
+            <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip={item.title}>
+                        {item.icon && <item.icon />}
+                        <span>{item.title}</span>
+                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                    <SidebarMenuSub className="py-4">
+                        <Popover open={open} onOpenChange={setOpen}>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={open}
+                                className="w-[254px] justify-between overflow-hidden"
+                            >
+                            <span className="truncate opacity-50 font-normal">
+                                {
+                                    label ? label
+                                    : "Select..."
+                                }
+                            </span>
+                            <ChevronRight className="opacity-25 shrink-0 ml-2" />
+                            </Button>
+                        </PopoverTrigger>
+                            <PopoverContent className="w-[254px] p-0">
+                                <Command>
+                                    <CommandInput placeholder="Search items..." className="h-9" />
+                                    <CommandList>
+                                        <CommandEmpty>No items found.</CommandEmpty>
+                                        {brandOptions.map((brandOption) => (
+                                            <CommandGroup heading={brandOption.label}>
+                                            {brandOption.options.map((option) => (
+                                                <CommandItem
+                                                    key={option.id}
+                                                    value={option.id}
+                                                    onSelect={(currentValue) => {
+                                                        setLabel(currentValue === label ? "" : `${option.brand} ${option.name}`)
+                                                        setOpen(false)
+                                                    }}
+                                                >
+                                                {option.brand} {option.name}
+                                                </CommandItem>
+                                            ))}
+                                            </CommandGroup>
+                                        ))}
+                                    </CommandList>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+                        <Button variant="outline" className="mt-1 mb-1">Add {item.singular}</Button>
+                    </SidebarMenuSub>
+                </CollapsibleContent>
+            </SidebarMenuItem>
         </Collapsible>
     )
 
