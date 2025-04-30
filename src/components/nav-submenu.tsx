@@ -117,7 +117,7 @@ export function NavSubmenu({
                             <PopoverContent className="w-[254px] p-0">
                                 <Command
                                     filter={(value, search) => {
-                                        if (value.includes(search)) return 1;
+                                        if (value.toLowerCase().includes(search.toLowerCase())) return 1;
                                         return 0;
                                     }}
                                 >
