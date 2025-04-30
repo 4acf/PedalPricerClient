@@ -47,6 +47,7 @@ export function NavSubmenu({
 
     const [open, setOpen] = useState<boolean>(false);
     const [label, setLabel] = useState<string>("");
+    const [selectedID, setSelectedID] = useState<string>("");
     const [brandOptions, setBrandOptions] = useState<BrandOption[]>([]);
 
     useEffect(() => {
@@ -114,7 +115,12 @@ export function NavSubmenu({
                             </Button>
                         </PopoverTrigger>
                             <PopoverContent className="w-[254px] p-0">
-                                <Command>
+                                <Command
+                                    filter={(value, search) => {
+                                        if (value.includes(search)) return 1;
+                                        return 0;
+                                    }}
+                                >
                                     <CommandInput placeholder="Search items..." className="h-9" />
                                     <CommandList>
                                         <CommandEmpty>No items found.</CommandEmpty>
@@ -123,9 +129,10 @@ export function NavSubmenu({
                                             {brandOption.options.map((option) => (
                                                 <CommandItem
                                                     key={option.id}
-                                                    value={option.id}
+                                                    value={`${option.brand} ${option.name}`}
                                                     onSelect={(currentValue) => {
                                                         setLabel(currentValue === label ? "" : `${option.brand} ${option.name}`)
+                                                        setSelectedID(option.id)
                                                         setOpen(false)
                                                     }}
                                                 >
