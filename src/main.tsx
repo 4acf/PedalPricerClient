@@ -1,13 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Home from './home'
-import { ThemeProvider } from '@/components/theme-provider'
+import Home from './Home'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider defaultTheme='dark' storageKey='pedal-pricer-ui-theme'>
-      <Home />
-    </ThemeProvider>
+    <Home />
   </StrictMode>,
 )
