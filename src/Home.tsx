@@ -21,18 +21,13 @@ import {
 } from "@/components/ui/sidebar"
 import { Mode, Property, ResolveColor, Slate } from "./utils/colors"
 import { ThemeProvider } from '@/components/theme-provider'
-import { useThemeStore } from "./hooks/use-theme-store"
 
 import '@xyflow/react/dist/style.css';
 
 export default function Home() {
 
-  const mode: Mode = useThemeStore((state) => state.mode);
-
-  console.log(mode)
-
   return (
-    <ThemeProvider defaultTheme={mode}>  
+    <ThemeProvider storageKey="pedal-pricer-ui-mode" defaultTheme="dark">  
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>

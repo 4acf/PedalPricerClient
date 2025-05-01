@@ -22,14 +22,24 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Switch } from "./ui/switch"
-import { useThemeStore } from "@/hooks/use-theme-store"
-import { Mode } from "@/utils/colors"
 import { DialogClose } from "@radix-ui/react-dialog"
+import { useTheme } from "./theme-provider"
 
 export function NavOptions({}) {
 
-  const mode: Mode = useThemeStore((state) => state.mode);
-  const toggleMode = useThemeStore((state) => state.toggleMode);
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    switch (theme) {
+      case "dark":
+        setTheme("light");
+        break;
+      case "light":
+      default:
+        setTheme("dark");
+        break;
+    }
+  }
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -62,7 +72,7 @@ export function NavOptions({}) {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="flex items-center space-x-2">
-                <Switch checked={mode === Mode.Dark} onCheckedChange={toggleMode} />
+                <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} />
                 <Label htmlFor="display-mode">
                   Dark Mode
                 </Label>
