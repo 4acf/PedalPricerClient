@@ -31,7 +31,7 @@ export default function Home() {
             <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
               <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
                 <ReactFlow proOptions={{ hideAttribution: true }} className="rounded-2xl">
-                  <Background variant={BackgroundVariant.Dots} color={ResolveColor(Slate, Property.Dots, Mode.Dark)} />
+                  <Background variant={BackgroundVariant.Dots} color="#3d4d6c" />
                 </ReactFlow>
               </div>
             </div>
