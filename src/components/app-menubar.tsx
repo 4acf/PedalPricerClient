@@ -4,6 +4,8 @@ import {
     MenubarContent,
     MenubarItem,
     MenubarMenu,
+    MenubarRadioGroup,
+    MenubarRadioItem,
     MenubarSeparator,
     MenubarShortcut,
     MenubarSub,
@@ -12,10 +14,12 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import { useTheme } from "./theme-provider"
+import { useColorScheme } from "./color-scheme-provider";
 
 export function AppMenubar() {
     
     const { theme, setTheme } = useTheme(); 
+    const { colorScheme, setColorScheme } = useColorScheme();
 
     const toggleTheme = () => {
         switch (theme) {
@@ -27,7 +31,12 @@ export function AppMenubar() {
             setTheme("dark");
             break;
         }
-      }
+    }
+
+    const changeColorScheme = (value: string) => {
+        console.log(value)
+        setColorScheme(value);
+    }
 
     return (
         <Menubar>
@@ -49,11 +58,13 @@ export function AppMenubar() {
                     <MenubarSub>
                         <MenubarSubTrigger>Color Scheme</MenubarSubTrigger>
                         <MenubarSubContent>
-                            <MenubarItem>Gray</MenubarItem>
-                            <MenubarItem>Neutral</MenubarItem>
-                            <MenubarItem>Slate</MenubarItem>
-                            <MenubarItem>Stone</MenubarItem>
-                            <MenubarItem>Zinc</MenubarItem>
+                            <MenubarRadioGroup value={colorScheme} onValueChange={changeColorScheme}>
+                                <MenubarRadioItem value="gray">Gray</MenubarRadioItem>
+                                <MenubarRadioItem value="neutral">Neutral</MenubarRadioItem>
+                                <MenubarRadioItem value="slate">Slate</MenubarRadioItem>
+                                <MenubarRadioItem value="stone">Stone</MenubarRadioItem>
+                                <MenubarRadioItem value="zinc">Zinc</MenubarRadioItem>
+                            </MenubarRadioGroup>
                         </MenubarSubContent>
                     </MenubarSub>
                 </MenubarContent>
