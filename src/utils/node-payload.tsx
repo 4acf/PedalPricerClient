@@ -17,7 +17,8 @@ export type NodePayload = {
     },
     style: { 
         width: number, 
-        height: number 
+        height: number,
+        filter: string,
     },
 }
 
@@ -39,6 +40,7 @@ export function convertItemToNodePayload(item: Item, itemType: ItemType): NodePa
         style: {
             width: item.width * INCH,
             height: item.height * INCH,
+            filter: 'drop-shadow(rgb(0, 0, 0, 0.5) 5px 5px 3px)',
         }
     }
 

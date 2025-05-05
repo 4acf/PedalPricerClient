@@ -8,7 +8,7 @@ type ItemNodeProps = {
 export function ItemNode({ data } : { data: ItemNodeProps }) {
 
     return (
-        <img src={`${baseUrl}/${data.itemType}/${data.id}/image`}/>
+        <img src={`${baseUrl}/${data.itemType}/${data.id}/image`} />
     )
 
 }
