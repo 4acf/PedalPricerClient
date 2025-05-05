@@ -18,19 +18,19 @@ export function NavOptions({}) {
       <SidebarGroupLabel>Options</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem key="Clear Canvas">
-          <SidebarMenuButton>
+        <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#ff6363]">
               <Trash2 />
               <span>Clear Canvas</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem key="Pricing">
-          <SidebarMenuButton>
+          <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#00ff94] ">
               <DollarSign />
               <span>Pricing</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem key="About">
-          <SidebarMenuButton>
+          <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out">
               <Info />
               <span>About</span>
           </SidebarMenuButton>
