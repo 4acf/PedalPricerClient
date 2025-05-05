@@ -19,6 +19,7 @@ export const GetInfo = async (itemType: ItemType) : Promise<ItemPreview[]> => {
 
 }
 
+//the ui components are not set up for this currently, but the api is set up for passing in multiple IDs at a time
 export const GetItems = async (itemType: ItemType, IDs: string[]) : Promise<Item[]> => {
 
     let concatenatedIDs: string = "";
@@ -27,8 +28,12 @@ export const GetItems = async (itemType: ItemType, IDs: string[]) : Promise<Item
     }
     concatenatedIDs = concatenatedIDs.slice(0, -1);
 
+    const params = new URLSearchParams({
+        rawIDs: concatenatedIDs,
+    });
+
     try{
-        const response: Response = await fetch(`${baseUrl}/${itemType}/${concatenatedIDs}`, {
+        const response: Response = await fetch(`${baseUrl}/${itemType}?${params}`, {
             method: "GET"
         });
         if(!response.ok){

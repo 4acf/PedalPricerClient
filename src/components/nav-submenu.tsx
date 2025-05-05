@@ -24,10 +24,12 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { ItemType } from "@/api/constants"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ItemPreview } from "@/api/models"
-import { GetInfo } from "@/api/api"
-  
+import { GetInfo, GetItems } from "@/api/api"
+import { useReactFlow } from "@xyflow/react"  
+import { convertItemToNodePayload } from "@/utils/node-payload"
+
 type BrandOption = {
     label: string,
     options: ItemPreview[],
@@ -49,6 +51,19 @@ export function NavSubmenu({
     const [label, setLabel] = useState<string>("");
     const [selectedID, setSelectedID] = useState<string>("");
     const [brandOptions, setBrandOptions] = useState<BrandOption[]>([]);
+    const { addNodes } = useReactFlow();
+
+    const addItem = useCallback(async () => {
+
+        if(selectedID === "")
+            return;
+
+        const items = await GetItems(item.api, [selectedID]);
+        items.forEach(element => {
+            addNodes(convertItemToNodePayload(element, item.api));
+        });
+
+    }, [selectedID]);
 
     useEffect(() => {
         const GetItemPreviews = async () => {
@@ -105,13 +120,13 @@ export function NavSubmenu({
                                 aria-expanded={open}
                                 className="w-[254px] justify-between overflow-hidden"
                             >
-                            <span className="truncate opacity-50 font-normal">
-                                {
-                                    label ? label
-                                    : "Select..."
-                                }
-                            </span>
-                            <ChevronRight className="opacity-25 shrink-0 ml-2" />
+                                <span className="truncate opacity-50 font-normal">
+                                    {
+                                        label ? label
+                                        : "Select..."
+                                    }
+                                </span>
+                                <ChevronRight className="opacity-25 shrink-0 ml-2" />
                             </Button>
                         </PopoverTrigger>
                             <PopoverContent className="w-[254px] p-0">
@@ -132,7 +147,7 @@ export function NavSubmenu({
                                                     value={`${option.brand} ${option.name}`}
                                                     onSelect={(currentValue) => {
                                                         setLabel(currentValue === label ? "" : `${option.brand} ${option.name}`)
-                                                        setSelectedID(option.id)
+                                                        setSelectedID(currentValue === label ? "" : option.id)
                                                         setOpen(false)
                                                     }}
                                                 >
@@ -145,7 +160,7 @@ export function NavSubmenu({
                                 </Command>
                             </PopoverContent>
                         </Popover>
-                        <Button variant="outline" className="mt-1 mb-1">Add {item.singular}</Button>
+                        <Button variant="outline" className="mt-1 mb-1" onClick={addItem}>Add {item.singular}</Button>
                     </SidebarMenuSub>
                 </CollapsibleContent>
             </SidebarMenuItem>

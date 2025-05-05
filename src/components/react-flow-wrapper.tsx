@@ -1,30 +1,16 @@
 import { ItemNode } from "./item-node"
-import { ItemTypes } from "../api/constants"
 import { ReactFlow, Background, BackgroundVariant, useNodesState } from "@xyflow/react"
 import '@xyflow/react/dist/style.css';
+import { INCH } from "@/utils/constants";
 
 const nodeTypes = {
     itemNode: ItemNode,
   };
-const defaultViewport = { x: 0, y: 0, zoom: 1 };
-
-const inch = 20;
-
-const initialNodes = [
-{
-    id: '1',
-    type: 'itemNode',
-    draggable: true,
-    selectable: true,
-    data: { itemType: ItemTypes.Pedals, id: "293ff675-5ebf-4e2d-16c5-08dd8226a971"}, 
-    position: { x: 0, y: 0 },
-    style: { width: 2 * inch, height: 2 * inch },
-},
-];
+const defaultViewport = { x: INCH, y: INCH, zoom: 1 };
 
 export function ReactFlowWrapper() {
 
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+    const [nodes, setNodes, onNodesChange] = useNodesState([]);
 
     return (
         <ReactFlow 
