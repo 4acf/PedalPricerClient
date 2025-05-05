@@ -9,7 +9,7 @@ export type NodePayload = {
     selectable: boolean,
     data: { 
         itemType: ItemType,
-        id: string,
+        item: Item,
     }, 
     position: {
         x: number,
@@ -31,7 +31,7 @@ export function convertItemToNodePayload(item: Item, itemType: ItemType): NodePa
         selectable: true,
         data: {
             itemType: itemType,
-            id: item.id,
+            item: item,
         },
         position: {
             x: 0,
