@@ -5,6 +5,7 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
+import { INCH } from "@/utils/constants";
 import clsx from "clsx";
 
 type ItemNodeProps = {
@@ -19,13 +20,22 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
     return (
         <HoverCard openDelay={50} closeDelay={50}>
             <HoverCardTrigger asChild>
+                <div
+                    className={clsx(
+                        'border rounded hover:border-[#3f85eb] transition-colors duration-200 p-[2px]',
+                        selected ? 'border-[#3f85eb]' : 'border-transparent'
+                    )}
+                >
                     <img 
                         src={`${baseUrl}/${data.itemType}/${item.id}/image`}
-                        className={clsx(
-                            'border rounded hover:border-[#3f85eb] transition-colors duration-200',
-                            selected ? 'border-[#3f85eb]' : 'border-transparent'
-                        )}
+                        style={
+                            {
+                                width: item.width * INCH,
+                                height: item.height * INCH,
+                            }
+                        }
                     />
+                </div>
             </HoverCardTrigger>
             <HoverCardContent>
                 <div className="space-y-1">
