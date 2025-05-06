@@ -12,18 +12,17 @@ import {
 } from "@/components/ui/sidebar"
 import { useReactFlow } from "@xyflow/react"
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-  AlertDialogPortal,
-} from "@/components/ui/alert-dialog"
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { useCallback } from "react";
+import { Button } from "./ui/button";
 
 export function NavOptions({}) {
 
@@ -38,28 +37,32 @@ export function NavOptions({}) {
       <SidebarGroupLabel>Options</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem key="Clear Canvas">
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
+          <Sheet>
+            <SheetTrigger asChild>
               <SidebarMenuButton  
                 className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#ff6363]"
               >
                 <Trash2 />
                 <span>Clear Canvas</span>
               </SidebarMenuButton>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Clear Canvas?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Clearing the canvas will also erase pricing details.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={clearCanvas}>Continue</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+            </SheetTrigger>
+            <SheetContent side="top" className="text-xl pb-5 items-center">
+              <SheetHeader className="pt-10">
+                <SheetTitle>Clear Canvas?</SheetTitle>
+                <SheetDescription>
+                Clearing the canvas will also erase pricing details.
+                </SheetDescription>
+              </SheetHeader>
+              <SheetFooter className="grid grid-cols-2 gap-5">
+                <SheetClose asChild>
+                  <Button variant="outline">Cancel</Button>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Button variant="destructive" onClick={clearCanvas}>Continue</Button>
+                </SheetClose>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
         </SidebarMenuItem>
         <SidebarMenuItem key="Pricing">
           <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#00e68a] ">
