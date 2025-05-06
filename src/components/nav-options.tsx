@@ -1,6 +1,8 @@
 import {
+  CircleHelp,
   DollarSign,
   Info,
+  Settings2,
   Trash2,
 } from "lucide-react"
 import {
@@ -68,6 +70,18 @@ export function NavOptions({}) {
           <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#00e68a] ">
             <DollarSign />
             <span>Pricing</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarMenuItem key="Config">
+          <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out">
+            <Settings2 />
+            <span>Config</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarMenuItem key="Help">
+          <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out">
+            <CircleHelp />
+            <span>Help</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem key="About">
