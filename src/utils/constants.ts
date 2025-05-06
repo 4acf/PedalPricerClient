@@ -1,1 +1,1 @@
-export const INCH = 20;
+export const INCH = 23;
