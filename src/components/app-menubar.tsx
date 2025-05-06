@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/menubar"
 import { useTheme } from "./theme-provider"
 import { useColorScheme } from "./color-scheme-provider";
+import { colorSchemes } from "./color-scheme-provider";
+import { capitalizeFirstLetter } from "@/utils/capitalize";
 
 export function AppMenubar() {
     
@@ -34,7 +36,6 @@ export function AppMenubar() {
     }
 
     const changeColorScheme = (value: string) => {
-        console.log(value)
         setColorScheme(value);
     }
 
@@ -59,11 +60,9 @@ export function AppMenubar() {
                         <MenubarSubTrigger>Color Scheme</MenubarSubTrigger>
                         <MenubarSubContent>
                             <MenubarRadioGroup value={colorScheme} onValueChange={changeColorScheme}>
-                                <MenubarRadioItem value="gray">Gray</MenubarRadioItem>
-                                <MenubarRadioItem value="neutral">Neutral</MenubarRadioItem>
-                                <MenubarRadioItem value="slate">Slate</MenubarRadioItem>
-                                <MenubarRadioItem value="stone">Stone</MenubarRadioItem>
-                                <MenubarRadioItem value="zinc">Zinc</MenubarRadioItem>
+                                {colorSchemes.map((colorScheme) => (
+                                    <MenubarRadioItem value={colorScheme.toLowerCase()}>{capitalizeFirstLetter(colorScheme)}</MenubarRadioItem>
+                                ))}
                             </MenubarRadioGroup>
                         </MenubarSubContent>
                     </MenubarSub>

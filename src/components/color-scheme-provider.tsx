@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react"
  
-const colorSchemes = ["gray", "neutral", "slate", "stone", "zinc"];
+export const colorSchemes = ["emerald", "gray", "neutral", "slate", "stone", "zinc"];
  
 type ColorScheme = typeof colorSchemes[number];
 
