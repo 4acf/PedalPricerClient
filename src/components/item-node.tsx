@@ -22,7 +22,7 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
                     <img 
                         src={`${baseUrl}/${data.itemType}/${item.id}/image`}
                         className={clsx(
-                            'border rounded hover:border-[#3f85eb] transition-colors duration-200 p-0.5',
+                            'border rounded hover:border-[#3f85eb] transition-colors duration-200',
                             selected ? 'border-[#3f85eb]' : 'border-transparent'
                         )}
                     />
