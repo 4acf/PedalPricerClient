@@ -8,6 +8,7 @@ import {
 import { INCH } from "@/utils/constants";
 import clsx from "clsx";
 import { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type ItemNodeProps = {
     itemType: ItemType,
@@ -33,8 +34,9 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
             <HoverCardTrigger asChild>
                 <div
                     className={clsx(
-                        'border rounded hover:border-[#3f85eb] transition-colors duration-200 p-[2px]',
-                        selected ? 'border-[#3f85eb]' : 'border-transparent'
+                        'border rounded transition-colors duration-200 p-[2px]',
+                        selected ? 'border-[#3f85eb]' : 'border-transparent',
+                        selected ? 'hover:border-[#3f85eb]' : 'hover:border-[rgb(63,133,235,0.5)]',
                     )}
                     onMouseEnter={handleMouseIn}
                     onMouseLeave={handleMouseOut}
