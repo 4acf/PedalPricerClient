@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/hover-card"
 import { INCH } from "@/utils/constants";
 import clsx from "clsx";
+import { useState } from "react";
 
 type ItemNodeProps = {
     itemType: ItemType,
@@ -15,16 +16,28 @@ type ItemNodeProps = {
 
 export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: boolean }) {
 
+    const [hovered, setHovered] = useState<boolean>(false);
+
+    const handleMouseIn = () => {
+        setHovered(true);
+    };
+
+    const handleMouseOut = () => {
+        setHovered(false);
+    };
+
     const item = data.item;
 
     return (
-        <HoverCard openDelay={50} closeDelay={50}>
+        <HoverCard open={selected || hovered} openDelay={50} closeDelay={50}>
             <HoverCardTrigger asChild>
                 <div
                     className={clsx(
                         'border rounded hover:border-[#3f85eb] transition-colors duration-200 p-[2px]',
                         selected ? 'border-[#3f85eb]' : 'border-transparent'
                     )}
+                    onMouseEnter={handleMouseIn}
+                    onMouseLeave={handleMouseOut}
                 >
                     <img 
                         src={`${baseUrl}/${data.itemType}/${item.id}/image`}
