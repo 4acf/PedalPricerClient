@@ -1,15 +1,11 @@
 import { baseUrl, ItemType } from "@/api/constants";
 import { Item } from "@/api/models";
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "@/components/ui/hover-card"
 import { INCH } from "@/utils/constants";
 import clsx from "clsx";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { useOnSelectionChange } from "@xyflow/react";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
 
 type ItemNodeProps = {
     itemType: ItemType,
@@ -18,15 +14,13 @@ type ItemNodeProps = {
 
 export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: boolean }) {
 
-    const [hovered, setHovered] = useState<boolean>(false);
-
-    const handleMouseIn = () => {
-        setHovered(true);
-    };
-
-    const handleMouseOut = () => {
-        setHovered(false);
-    };
+    const [rotation, setRotation] = useState<number>(0);
+    const rotateItem = () => {
+        if(rotation % 90 != 0)
+            setRotation(0)
+        else
+            setRotation(rotation + 90);
+    }
 
     const onChange = useCallback(() => {
         toast.dismiss();
@@ -39,16 +33,18 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
     const item = data.item;
 
     return (
-        <HoverCard open={selected || hovered} openDelay={50} closeDelay={50}>
-            <HoverCardTrigger asChild>
+        <ContextMenu>
+            <ContextMenuTrigger asChild>
                 <div
                     className={clsx(
                         'border rounded transition-colors duration-200 p-[2px]',
                         selected ? 'border-[#3f85eb]' : 'border-transparent',
                         selected ? 'hover:border-[#3f85eb]' : 'hover:border-[rgb(63,133,235,0.5)]',
                     )}
-                    onMouseEnter={handleMouseIn}
-                    onMouseLeave={handleMouseOut}
+                    style={{
+                        transform: `rotate(${rotation}deg)`,
+                        transition: '0.3s',
+                    }}
                     onClick={() => toast(`${item.brand} ${item.name}`, {
                         duration: Infinity,
                         description: (
@@ -73,21 +69,22 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
                         }
                     />
                 </div>
-            </HoverCardTrigger>
-            <HoverCardContent>
-                {/* <div className="space-y-1">
-                    <h4 className="text-sm font-semibold">{item.brand} {item.name}</h4>
-                    <ul>
-                        <li>
-                            <p className="text-sm">Dimensions: {item.width}in x {item.height}in</p>
-                        </li>
-                        <li>
-                            <p className="text-sm">Price: $ -</p>
-                        </li>
-                    </ul>
-                </div> */}
-            </HoverCardContent>
-        </HoverCard>
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+                <ContextMenuItem onMouseUp={rotateItem}>
+                    Rotate
+                    <ContextMenuShortcut>R</ContextMenuShortcut>
+                </ContextMenuItem>
+                <ContextMenuItem>
+                    Delete
+                    <ContextMenuShortcut>Del</ContextMenuShortcut>
+                </ContextMenuItem>
+                <ContextMenuItem>
+                    Duplicate
+                    <ContextMenuShortcut>⌘D</ContextMenuShortcut>
+                </ContextMenuItem>
+            </ContextMenuContent>
+        </ContextMenu>
     )
 
 }
