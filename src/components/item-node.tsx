@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/hover-card"
 import { INCH } from "@/utils/constants";
 import clsx from "clsx";
-import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { useCallback, useState } from "react";
+import { toast } from "sonner";
+import { useOnSelectionChange } from "@xyflow/react";
 
 type ItemNodeProps = {
     itemType: ItemType,
@@ -27,6 +28,14 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
         setHovered(false);
     };
 
+    const onChange = useCallback(() => {
+        toast.dismiss();
+    }, []);
+
+    useOnSelectionChange({
+        onChange,
+    });
+
     const item = data.item;
 
     return (
@@ -40,6 +49,19 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
                     )}
                     onMouseEnter={handleMouseIn}
                     onMouseLeave={handleMouseOut}
+                    onClick={() => toast(`${item.brand} ${item.name}`, {
+                        duration: Infinity,
+                        description: (
+                            <ul>
+                                <li>
+                                    <p className="text-sm">Dimensions: {item.width}in x {item.height}in</p>
+                                </li>
+                                <li>
+                                    <p className="text-sm">Price: $ -</p>
+                                </li>
+                            </ul>
+                        ),
+                    })}
                 >
                     <img 
                         src={`${baseUrl}/${data.itemType}/${item.id}/image`}
@@ -53,7 +75,7 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
                 </div>
             </HoverCardTrigger>
             <HoverCardContent>
-                <div className="space-y-1">
+                {/* <div className="space-y-1">
                     <h4 className="text-sm font-semibold">{item.brand} {item.name}</h4>
                     <ul>
                         <li>
@@ -63,7 +85,7 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
                             <p className="text-sm">Price: $ -</p>
                         </li>
                     </ul>
-                </div>
+                </div> */}
             </HoverCardContent>
         </HoverCard>
     )

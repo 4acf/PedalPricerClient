@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useReactFlow } from "@xyflow/react"
+import { useReactFlow, useStore } from "@xyflow/react"
 import {
   Sheet,
   SheetClose,
@@ -26,6 +26,12 @@ import {
 import { useCallback } from "react";
 import { Button } from "./ui/button";
 
+const selector = (s) => {
+  return {
+    unselectAll: s.unselectNodesAndEdges
+  };
+};
+
 export function NavOptions({}) {
 
   const { setNodes } = useReactFlow();
@@ -34,6 +40,8 @@ export function NavOptions({}) {
     setNodes([]);
   }, []);
 
+  const { unselectAll } = useStore(selector);
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Options</SidebarGroupLabel>
@@ -41,7 +49,7 @@ export function NavOptions({}) {
         <SidebarMenuItem key="Clear Canvas">
           <Sheet>
             <SheetTrigger asChild>
-              <SidebarMenuButton  
+              <SidebarMenuButton onClick={unselectAll}  
                 className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#ff6363]"
               >
                 <Trash2 />

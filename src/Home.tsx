@@ -10,6 +10,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { ColorSchemeProvider } from "./components/color-scheme-provider"
 import { ReactFlowWrapper } from "./components/react-flow-wrapper"
 import { ReactFlowProvider } from "@xyflow/react"
+import { Toaster } from "sonner"
 
 
 export default function Home() {
@@ -18,6 +19,19 @@ export default function Home() {
     <ThemeProvider>  
       <ColorSchemeProvider>
         <ReactFlowProvider>
+          <Toaster
+          visibleToasts={1}
+            toastOptions={{
+              style: {
+                color: 'var(--card-foreground)',
+                background: 'var(--card)',
+                borderColor: 'var(--border)',
+              },
+              classNames: {
+                description: '!text-(--muted-foreground)',
+              }
+            }} 
+          />
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
