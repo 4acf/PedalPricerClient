@@ -4,7 +4,7 @@ import { INCH } from "@/utils/constants";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useOnSelectionChange } from "@xyflow/react";
+import { useOnSelectionChange, useReactFlow } from "@xyflow/react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
 
 type ItemNodeProps = {
@@ -12,7 +12,9 @@ type ItemNodeProps = {
     item: Item,
 }
 
-export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: boolean }) {
+export function ItemNode({ id, data, selected,  } : { id: string, data: ItemNodeProps, selected: boolean,  }) {
+
+    const { deleteElements } = useReactFlow();
 
     //rotation logic
     const [rotation, setRotation] = useState<number>(0);
@@ -23,6 +25,12 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
             const direction: number = clockwise ? 1 : -1;
             setRotation(rotation + (90 * direction));
         }
+    }
+
+    //deletion logic
+    const handleDelete = () => {
+        deleteElements({ nodes: [{ id: id }]});
+        toast.dismiss();
     }
 
     //toast config
@@ -41,8 +49,12 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
                 return;
             if (e.key === 'e' || e.key === 'E') {
                 rotateItem(true);
-            } else if (e.key === 'q' || e.key === 'Q') {
+            } 
+            else if (e.key === 'q' || e.key === 'Q') {
                 rotateItem(false);
+            }
+            else if (e.key === 'Delete' || e.key === 'Backspace') {
+                handleDelete();
             }
         };
 
@@ -102,9 +114,9 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
                     <ContextMenuShortcut>Q</ContextMenuShortcut>
                 </ContextMenuItem>
                 <ContextMenuSeparator />
-                <ContextMenuItem>
+                <ContextMenuItem onMouseUp={handleDelete}>
                     Delete
-                    <ContextMenuShortcut>Del</ContextMenuShortcut>
+                    <ContextMenuShortcut>&#x232B;</ContextMenuShortcut>
                 </ContextMenuItem>
                 <ContextMenuSeparator />
                 <ContextMenuItem>

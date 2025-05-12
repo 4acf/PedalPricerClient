@@ -20,6 +20,7 @@ export function ReactFlowWrapper() {
             proOptions={{ hideAttribution: true }} 
             className="rounded-2xl"
             defaultViewport={defaultViewport}
+            deleteKeyCode={[]}
         >
             <Background variant={BackgroundVariant.Dots} color="#6b6b6b" />
         </ReactFlow>
