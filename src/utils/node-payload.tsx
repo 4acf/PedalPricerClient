@@ -1,5 +1,6 @@
 import { ItemType } from "@/api/constants"
 import { Item } from "@/api/models"
+import { XYPosition } from "@xyflow/react";
 
 export type NodePayload = {
     id: string,
@@ -19,7 +20,7 @@ export type NodePayload = {
     },
 }
 
-export function convertItemToNodePayload(item: Item, itemType: ItemType): NodePayload {
+export function convertItemToNodePayload(item: Item, itemType: ItemType, position?: XYPosition): NodePayload {
 
     const nodePayload = {
         id: crypto.randomUUID(),
@@ -31,8 +32,8 @@ export function convertItemToNodePayload(item: Item, itemType: ItemType): NodePa
             item: item,
         },
         position: {
-            x: 0,
-            y: 0,
+            x: position?.x || 0,
+            y: position?.y || 0,
         },
         style: {
             filter: 'drop-shadow(rgb(0, 0, 0, 0.5) 5px 5px 3px)',

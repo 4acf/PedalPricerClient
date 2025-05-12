@@ -6,32 +6,42 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useOnSelectionChange, useReactFlow } from "@xyflow/react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
+import { convertItemToNodePayload } from "@/utils/node-payload";
 
 type ItemNodeProps = {
     itemType: ItemType,
     item: Item,
 }
 
-export function ItemNode({ id, data, selected,  } : { id: string, data: ItemNodeProps, selected: boolean,  }) {
+export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeProps, selected: boolean, }) {
 
-    const { deleteElements } = useReactFlow();
+    const { getNodes, addNodes, deleteElements } = useReactFlow();
 
     //rotation logic
     const [rotation, setRotation] = useState<number>(0);
-    const rotateItem = (clockwise: boolean) => {
+    const rotateItem = useCallback((clockwise: boolean) => {
         if(rotation % 90 != 0)
             setRotation(0)
         else{
             const direction: number = clockwise ? 1 : -1;
             setRotation(rotation + (90 * direction));
         }
-    }
+    }, [rotation]);
 
     //deletion logic
-    const handleDelete = () => {
+    const deleteItem = useCallback(() => {
         deleteElements({ nodes: [{ id: id }]});
         toast.dismiss();
-    }
+    }, [id]);
+
+    //duplication logic
+    const duplicateItem = useCallback(() => {
+
+        const nodes = getNodes();
+        const position = nodes.find(n => n.id === id)?.position;  
+        addNodes(convertItemToNodePayload(data.item, data.itemType, position));
+
+    }, [data]);
 
     //toast config
     const onChange = useCallback(() => {
@@ -54,7 +64,10 @@ export function ItemNode({ id, data, selected,  } : { id: string, data: ItemNode
                 rotateItem(false);
             }
             else if (e.key === 'Delete' || e.key === 'Backspace') {
-                handleDelete();
+                deleteItem();
+            }
+            else if (e.key === 'd' || e.key === 'D') {
+                duplicateItem();
             }
         };
 
@@ -114,14 +127,14 @@ export function ItemNode({ id, data, selected,  } : { id: string, data: ItemNode
                     <ContextMenuShortcut>Q</ContextMenuShortcut>
                 </ContextMenuItem>
                 <ContextMenuSeparator />
-                <ContextMenuItem onMouseUp={handleDelete}>
+                <ContextMenuItem onMouseUp={deleteItem}>
                     Delete
                     <ContextMenuShortcut>&#x232B;</ContextMenuShortcut>
                 </ContextMenuItem>
                 <ContextMenuSeparator />
-                <ContextMenuItem>
+                <ContextMenuItem onMouseUp={duplicateItem}>
                     Duplicate
-                    <ContextMenuShortcut>⌘D</ContextMenuShortcut>
+                    <ContextMenuShortcut>D</ContextMenuShortcut>
                 </ContextMenuItem>
             </ContextMenuContent>
         </ContextMenu>
