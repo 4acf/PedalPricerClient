@@ -2,7 +2,7 @@ import { baseUrl, ItemType } from "@/api/constants";
 import { Item } from "@/api/models";
 import { INCH } from "@/utils/constants";
 import clsx from "clsx";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useOnSelectionChange } from "@xyflow/react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
@@ -14,6 +14,7 @@ type ItemNodeProps = {
 
 export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: boolean }) {
 
+    //rotation logic
     const [rotation, setRotation] = useState<number>(0);
     const rotateItem = (clockwise: boolean) => {
         if(rotation % 90 != 0)
@@ -24,6 +25,7 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
         }
     }
 
+    //toast config
     const onChange = useCallback(() => {
         toast.dismiss();
     }, []);
@@ -31,6 +33,24 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
     useOnSelectionChange({
         onChange,
     });
+
+    //keypress listeners
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!selected) 
+                return;
+            if (e.key === 'e' || e.key === 'E') {
+                rotateItem(true);
+            } else if (e.key === 'q' || e.key === 'Q') {
+                rotateItem(false);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [selected, rotateItem]);
 
     const item = data.item;
 
@@ -75,11 +95,11 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
             <ContextMenuContent>
                 <ContextMenuItem onMouseUp={() => rotateItem(true)}>
                     Rotate Clockwise
-                    <ContextMenuShortcut>R</ContextMenuShortcut>
+                    <ContextMenuShortcut>E</ContextMenuShortcut>
                 </ContextMenuItem>
                 <ContextMenuItem onMouseUp={() => rotateItem(false)}>
                     Rotate Counter-Clockwise
-                    <ContextMenuShortcut>R</ContextMenuShortcut>
+                    <ContextMenuShortcut>Q</ContextMenuShortcut>
                 </ContextMenuItem>
                 <ContextMenuSeparator />
                 <ContextMenuItem>
