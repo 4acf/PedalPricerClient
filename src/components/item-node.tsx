@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { useOnSelectionChange } from "@xyflow/react";
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
 
 type ItemNodeProps = {
     itemType: ItemType,
@@ -15,11 +15,13 @@ type ItemNodeProps = {
 export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: boolean }) {
 
     const [rotation, setRotation] = useState<number>(0);
-    const rotateItem = () => {
+    const rotateItem = (clockwise: boolean) => {
         if(rotation % 90 != 0)
             setRotation(0)
-        else
-            setRotation(rotation + 90);
+        else{
+            const direction: number = clockwise ? 1 : -1;
+            setRotation(rotation + (90 * direction));
+        }
     }
 
     const onChange = useCallback(() => {
@@ -71,14 +73,20 @@ export function ItemNode({ data, selected } : { data: ItemNodeProps, selected: b
                 </div>
             </ContextMenuTrigger>
             <ContextMenuContent>
-                <ContextMenuItem onMouseUp={rotateItem}>
-                    Rotate
+                <ContextMenuItem onMouseUp={() => rotateItem(true)}>
+                    Rotate Clockwise
                     <ContextMenuShortcut>R</ContextMenuShortcut>
                 </ContextMenuItem>
+                <ContextMenuItem onMouseUp={() => rotateItem(false)}>
+                    Rotate Counter-Clockwise
+                    <ContextMenuShortcut>R</ContextMenuShortcut>
+                </ContextMenuItem>
+                <ContextMenuSeparator />
                 <ContextMenuItem>
                     Delete
                     <ContextMenuShortcut>Del</ContextMenuShortcut>
                 </ContextMenuItem>
+                <ContextMenuSeparator />
                 <ContextMenuItem>
                     Duplicate
                     <ContextMenuShortcut>⌘D</ContextMenuShortcut>
