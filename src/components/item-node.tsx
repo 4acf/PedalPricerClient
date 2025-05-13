@@ -77,23 +77,32 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
         const handleKeyDown = (e: KeyboardEvent) => {
             if (!selected) 
                 return;
-            if (e.key === 'e' || e.key === 'E') {
-                rotateItem(true);
-            } 
-            else if (e.key === 'q' || e.key === 'Q') {
-                rotateItem(false);
-            }
-            else if (e.key === 'Delete' || e.key === 'Backspace') {
-                deleteItem();
-            }
-            else if (e.key === 'd' || e.key === 'D') {
-                duplicateItem();
-            }
-            else if(e.key === 'w' || e.key === 'W') {
-                moveToFront();
-            }
-            else if(e.key === 's' || e.key === 'S') {
-                moveToBack();
+            switch(e.key){
+                case 'e':
+                case 'E':
+                    rotateItem(true);
+                    break;
+                case 'q':
+                case 'Q':
+                    rotateItem(false);
+                    break;
+                case 'Delete':
+                    deleteItem();
+                    break;
+                case 'd':
+                case 'D':
+                    duplicateItem();
+                    break;
+                case 'w':
+                case 'W':
+                    moveToFront();
+                    break;
+                case 's':
+                case 'S':
+                    moveToBack();
+                    break;         
+                default:
+                    return;
             }
         };
 
