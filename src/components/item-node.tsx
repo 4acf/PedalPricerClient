@@ -4,7 +4,7 @@ import { INCH } from "@/utils/constants";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useOnSelectionChange, useReactFlow } from "@xyflow/react";
+import { Node, useOnSelectionChange, useReactFlow } from "@xyflow/react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
 import { convertItemToNodePayload } from "@/utils/node-payload";
 import { toUSD } from "@/utils/string-formatting";
@@ -13,6 +13,7 @@ type ItemNodeProps = {
     itemType: ItemType,
     item: Item,
     price: number,
+    setNodes: React.Dispatch<React.SetStateAction<Node[]>>,
 }
 
 export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeProps, selected: boolean, }) {
@@ -39,10 +40,28 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
     //duplication logic
     const duplicateItem = useCallback(() => {
         const nodes = getNodes();
-        console.log(nodes)
         const position = nodes.find(n => n.id === id)?.position;  
         addNodes(convertItemToNodePayload(data.item, data.itemType, position));
     }, [data]);
+    
+    //arrangement logic
+    const moveToFront = useCallback(() => {
+        data.setNodes((nodes) => {
+            const node = nodes.find(n => n.id === id);
+            if (!node) return nodes;
+            const others = nodes.filter(n => n.id !== id);
+            return [...others, node];
+        });
+    }, [id]);
+
+    const moveToBack = useCallback(() => {
+        data.setNodes((nodes) => {
+            const node = nodes.find(n => n.id === id);
+            if (!node) return nodes;
+            const others = nodes.filter(n => n.id !== id);
+            return [node, ...others];
+        });
+    }, [id]);
 
     //toast config
     const onChange = useCallback(() => {
@@ -69,6 +88,12 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
             }
             else if (e.key === 'd' || e.key === 'D') {
                 duplicateItem();
+            }
+            else if(e.key === 'w' || e.key === 'W') {
+                moveToFront();
+            }
+            else if(e.key === 's' || e.key === 'S') {
+                moveToBack();
             }
         };
 
@@ -136,6 +161,15 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
                 <ContextMenuItem onMouseUp={duplicateItem}>
                     Duplicate
                     <ContextMenuShortcut>D</ContextMenuShortcut>
+                </ContextMenuItem>
+                <ContextMenuSeparator />
+                <ContextMenuItem onMouseUp={moveToFront}>
+                    Move to Front
+                    <ContextMenuShortcut>W</ContextMenuShortcut>
+                </ContextMenuItem>
+                <ContextMenuItem onMouseUp={moveToBack}>
+                    Move to Back
+                    <ContextMenuShortcut>S</ContextMenuShortcut>
                 </ContextMenuItem>
             </ContextMenuContent>
         </ContextMenu>
