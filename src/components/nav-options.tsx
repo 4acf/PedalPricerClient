@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/sheet"
 import { useCallback } from "react";
 import { Button } from "./ui/button";
+import { PricingMain } from "./pricing-main";
 
 const selector = (s) => {
   return {
@@ -75,25 +76,40 @@ export function NavOptions({}) {
           </Sheet>
         </SidebarMenuItem>
         <SidebarMenuItem key="Pricing">
-          <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#00e68a] ">
-            <DollarSign />
-            <span>Pricing</span>
-          </SidebarMenuButton>
+          <Sheet>
+            <SheetTrigger asChild>
+              <SidebarMenuButton onClick={unselectAll}
+                className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#00e68a] "
+              >
+                <DollarSign />
+                <span>Pricing</span>
+              </SidebarMenuButton>
+            </SheetTrigger>
+            <SheetContent>
+              <PricingMain />
+            </SheetContent>
+          </Sheet>
         </SidebarMenuItem>
         <SidebarMenuItem key="Config">
-          <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out">
+          <SidebarMenuButton onClick={unselectAll} 
+            className="cursor-pointer transition-colors duration-150 ease-in-out"
+          >
             <Settings2 />
             <span>Config</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem key="Help">
-          <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out">
+          <SidebarMenuButton onClick={unselectAll} 
+            className="cursor-pointer transition-colors duration-150 ease-in-out"
+          >
             <CircleHelp />
             <span>Help</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem key="About">
-          <SidebarMenuButton className="cursor-pointer transition-colors duration-150 ease-in-out">
+          <SidebarMenuButton onClick={unselectAll}
+            className="cursor-pointer transition-colors duration-150 ease-in-out"
+          >
             <Info />
             <span>About</span>
           </SidebarMenuButton>

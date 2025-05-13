@@ -16,7 +16,7 @@ import {
 import { useTheme } from "./theme-provider"
 import { useColorScheme } from "./color-scheme-provider";
 import { colorSchemes } from "./color-scheme-provider";
-import { capitalizeFirstLetter } from "@/utils/capitalize";
+import { capitalizeFirstLetter } from "@/utils/string-formatting";
 
 export function AppMenubar() {
     

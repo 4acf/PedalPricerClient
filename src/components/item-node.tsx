@@ -7,10 +7,12 @@ import { toast } from "sonner";
 import { useOnSelectionChange, useReactFlow } from "@xyflow/react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
 import { convertItemToNodePayload } from "@/utils/node-payload";
+import { toUSD } from "@/utils/string-formatting";
 
 type ItemNodeProps = {
     itemType: ItemType,
     item: Item,
+    price: number,
 }
 
 export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeProps, selected: boolean, }) {
@@ -36,11 +38,10 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
 
     //duplication logic
     const duplicateItem = useCallback(() => {
-
         const nodes = getNodes();
+        console.log(nodes)
         const position = nodes.find(n => n.id === id)?.position;  
         addNodes(convertItemToNodePayload(data.item, data.itemType, position));
-
     }, [data]);
 
     //toast config
@@ -100,7 +101,7 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
                                     <p className="text-sm">Dimensions: {item.width}in x {item.height}in</p>
                                 </li>
                                 <li>
-                                    <p className="text-sm">Price: $ -</p>
+                                    <p className="text-sm">{`Price: ${toUSD(data.price)}`}</p>
                                 </li>
                             </ul>
                         ),
