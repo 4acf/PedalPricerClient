@@ -26,13 +26,16 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
     useEffect(() => {
         data.setNodes((nds) =>
             nds.map((node) => {
-                return {
+                if(node.id === id){
+                    return {
                     ...node,
                     data: {
                         ...node.data,
                         price: price,
                     },
-                };
+                    };
+                }
+                return node;
             }),
         );
     }, [price, data.setNodes]);
