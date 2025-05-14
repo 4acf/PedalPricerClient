@@ -8,6 +8,8 @@ import { Node, useOnSelectionChange, useReactFlow } from "@xyflow/react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
 import { convertItemToNodePayload } from "@/utils/node-payload";
 import { toUSD } from "@/utils/string-formatting";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 type ItemNodeProps = {
     itemType: ItemType,
@@ -19,6 +21,21 @@ type ItemNodeProps = {
 export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeProps, selected: boolean, }) {
 
     const { getNodes, addNodes, deleteElements } = useReactFlow();
+    const [price, setPrice] = useState<number>(data.price);
+
+    useEffect(() => {
+        data.setNodes((nds) =>
+            nds.map((node) => {
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        price: price,
+                    },
+                };
+            }),
+        );
+    }, [price, data.setNodes]);
 
     //rotation logic
     const [rotation, setRotation] = useState<number>(0);
@@ -41,7 +58,7 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
     const duplicateItem = useCallback(() => {
         const nodes = getNodes();
         const position = nodes.find(n => n.id === id)?.position;  
-        addNodes(convertItemToNodePayload(data.item, data.itemType, position));
+        addNodes(convertItemToNodePayload(data.item, data.itemType, position, price));
     }, [data]);
     
     //arrangement logic
@@ -112,6 +129,15 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
         };
     }, [selected, rotateItem]);
 
+    const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target.value;
+        const sanitized = input.replace(/[$,]/g, "");
+        const isValidCurrency = /^\d+(\.\d{0,2})?$/.test(sanitized)
+        if(isValidCurrency && sanitized !== ""){
+            setPrice(parseFloat(input));
+        }
+    }
+
     const item = data.item;
 
     return (
@@ -130,12 +156,18 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
                     onClick={() => toast(`${item.brand} ${item.name}`, {
                         duration: Infinity,
                         description: (
-                            <ul>
+                            <ul className="flex-row space-y-1 pt-1">
                                 <li>
                                     <p className="text-sm">Dimensions: {item.width}in x {item.height}in</p>
                                 </li>
-                                <li>
-                                    <p className="text-sm">{`Price: ${toUSD(data.price)}`}</p>
+                                <li className="flex items-center">
+                                    <Label htmlFor="price-input" className="w-14 text-sm">Price:</Label>
+                                    <Input 
+                                        id="price-input" 
+                                        type="number" 
+                                        placeholder={toUSD(price)}
+                                        onChange={(e) => handlePriceChange(e)}
+                                    />
                                 </li>
                             </ul>
                         ),

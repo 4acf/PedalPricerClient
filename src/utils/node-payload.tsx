@@ -21,7 +21,7 @@ export type NodePayload = {
     },
 }
 
-export function convertItemToNodePayload(item: Item, itemType: ItemType, position?: XYPosition): NodePayload {
+export function convertItemToNodePayload(item: Item, itemType: ItemType, position?: XYPosition, price?: number): NodePayload {
 
     const nodePayload: NodePayload = {
         id: crypto.randomUUID(),
@@ -31,7 +31,7 @@ export function convertItemToNodePayload(item: Item, itemType: ItemType, positio
         data: {
             itemType: itemType,
             item: item,
-            price: 0,
+            price: price || 0,
         },
         position: {
             x: position?.x || 0,
