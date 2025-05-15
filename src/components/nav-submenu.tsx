@@ -28,7 +28,7 @@ import { useCallback, useEffect, useState } from "react"
 import { ItemPreview } from "@/api/models"
 import { GetInfo, GetItems } from "@/api/api"
 import { useReactFlow } from "@xyflow/react"  
-import { convertItemToNodePayload } from "@/utils/node-payload"
+import { createDefaultNode } from "@/utils/node-payload"
 
 type BrandOption = {
     label: string,
@@ -60,7 +60,7 @@ export function NavSubmenu({
 
         const items = await GetItems(item.api, [selectedID]);
         items.forEach(element => {
-            addNodes(convertItemToNodePayload(element, item.api));
+            addNodes(createDefaultNode(element, item.api));
         });
 
     }, [selectedID]);

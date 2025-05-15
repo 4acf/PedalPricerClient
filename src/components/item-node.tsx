@@ -4,13 +4,14 @@ import { INCH } from "@/utils/constants";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useOnSelectionChange, useReactFlow } from "@xyflow/react";
+import { Node, useOnSelectionChange, useReactFlow } from "@xyflow/react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
-import { convertItemToNodePayload } from "@/utils/node-payload";
+import { createNodeCopy } from "@/utils/node-payload";
 import { toUSD } from "@/utils/string-formatting";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useFlowStore } from "@/hooks/use-flow-store";
+import { ItemNodeData } from "@/utils/item-node-data";
 
 type ItemNodeProps = {
     itemType: ItemType,
@@ -60,9 +61,11 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
 
     //duplication logic
     const duplicateItem = useCallback(() => {
-        const nodes = getNodes();
-        const position = nodes.find(n => n.id === id)?.position;  
-        addNodes(convertItemToNodePayload(data.item, data.itemType, position, price));
+        const nodes = getNodes() as Node<ItemNodeData>[];
+        const node = nodes.find(n => n.id === id);
+        if(!node)
+            return;  
+        addNodes(createNodeCopy(node));
     }, [data]);
     
     //arrangement logic

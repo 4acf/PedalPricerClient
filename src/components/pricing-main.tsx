@@ -1,10 +1,11 @@
 import { SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "./ui/table";
-import { useReactFlow } from "@xyflow/react";
+import { Node, useReactFlow } from "@xyflow/react";
 import { formalizeItemType, toUSD } from "@/utils/string-formatting";
 import { Checkbox } from "./ui/checkbox";
 import { useFlowStore } from "@/hooks/use-flow-store";
 import { useCallback } from "react";
+import { ItemNodeData } from "@/utils/item-node-data";
 
 export function PricingMain() {
 
@@ -28,7 +29,7 @@ export function PricingMain() {
         );
     }, [setNodes]);
 
-    const nodes = getNodes();
+    const nodes = getNodes() as Node<ItemNodeData>[];
     let total: number = 0;
     for(let node of nodes){
         if(node.data.include)
