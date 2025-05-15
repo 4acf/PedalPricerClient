@@ -4,27 +4,28 @@ import { INCH } from "@/utils/constants";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Node, useOnSelectionChange, useReactFlow } from "@xyflow/react";
+import { useOnSelectionChange, useReactFlow } from "@xyflow/react";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuTrigger } from "./ui/context-menu";
 import { convertItemToNodePayload } from "@/utils/node-payload";
 import { toUSD } from "@/utils/string-formatting";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { useFlowStore } from "@/hooks/use-flow-store";
 
 type ItemNodeProps = {
     itemType: ItemType,
     item: Item,
     price: number,
-    setNodes: React.Dispatch<React.SetStateAction<Node[]>>,
 }
 
 export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeProps, selected: boolean, }) {
 
     const { getNodes, addNodes, deleteElements } = useReactFlow();
+    const setNodes = useFlowStore((state) => state.setNodes);
     const [price, setPrice] = useState<number>(data.price);
 
     useEffect(() => {
-        data.setNodes((nds) =>
+        setNodes((nds) =>
             nds.map((node) => {
                 if(node.id === id){
                     return {
@@ -38,7 +39,7 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
                 return node;
             }),
         );
-    }, [price, data.setNodes]);
+    }, [price, setNodes]);
 
     //rotation logic
     const [rotation, setRotation] = useState<number>(0);
@@ -66,7 +67,7 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
     
     //arrangement logic
     const moveToFront = useCallback(() => {
-        data.setNodes((nodes) => {
+        setNodes((nodes) => {
             const node = nodes.find(n => n.id === id);
             if (!node) return nodes;
             const others = nodes.filter(n => n.id !== id);
@@ -75,7 +76,7 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
     }, [id]);
 
     const moveToBack = useCallback(() => {
-        data.setNodes((nodes) => {
+        setNodes((nodes) => {
             const node = nodes.find(n => n.id === id);
             if (!node) return nodes;
             const others = nodes.filter(n => n.id !== id);

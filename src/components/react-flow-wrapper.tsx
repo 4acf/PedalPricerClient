@@ -15,14 +15,6 @@ export function ReactFlowWrapper() {
     const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
     const setNodesUpdater = useFlowStore((state) => state.setNodesUpdater);
 
-    const nodesWithSetters = nodes.map((node: Node) => ({
-        ...node,
-        data: {
-            ...node.data,
-            setNodes,
-        },
-    }));
-
     //make setNodes global
     useEffect(() => {
         setNodesUpdater(setNodes);
@@ -30,7 +22,7 @@ export function ReactFlowWrapper() {
 
     return (
         <ReactFlow 
-            nodes={nodesWithSetters}
+            nodes={nodes}
             nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
             proOptions={{ hideAttribution: true }} 
