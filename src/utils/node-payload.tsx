@@ -11,6 +11,7 @@ export type NodePayload = {
         itemType: ItemType,
         item: Item,
         price: number,
+        include: boolean,
     }, 
     position: {
         x: number,
@@ -21,7 +22,7 @@ export type NodePayload = {
     },
 }
 
-export function convertItemToNodePayload(item: Item, itemType: ItemType, position?: XYPosition, price?: number): NodePayload {
+export function convertItemToNodePayload(item: Item, itemType: ItemType, position?: XYPosition, price?: number, include?: boolean): NodePayload {
 
     const nodePayload: NodePayload = {
         id: crypto.randomUUID(),
@@ -31,11 +32,12 @@ export function convertItemToNodePayload(item: Item, itemType: ItemType, positio
         data: {
             itemType: itemType,
             item: item,
-            price: price || 0,
+            price: price ?? 0,
+            include: include ?? true,
         },
         position: {
-            x: position?.x || 0,
-            y: position?.y || 0,
+            x: position?.x ?? 0,
+            y: position?.y ?? 0,
         },
         style: {
             filter: 'drop-shadow(rgb(0, 0, 0, 0.5) 5px 5px 3px)',

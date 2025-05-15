@@ -1,18 +1,38 @@
-import { useCallback, useState } from "react";
 import { SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "./ui/table";
 import { useReactFlow } from "@xyflow/react";
 import { formalizeItemType, toUSD } from "@/utils/string-formatting";
 import { Checkbox } from "./ui/checkbox";
+import { useFlowStore } from "@/hooks/use-flow-store";
+import { useCallback } from "react";
 
 export function PricingMain() {
 
     const { getNodes } = useReactFlow();
+    const setNodes = useFlowStore((state) => state.setNodes);
+
+    const handleChecked = useCallback((id: string, include: boolean) => {
+        setNodes((nds) =>
+            nds.map((node) => {
+                if(node.id === id){
+                    return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        include: !include,
+                    },
+                    };
+                }
+                return node;
+            }),
+        );
+    }, [setNodes]);
 
     const nodes = getNodes();
     let total: number = 0;
     for(let node of nodes){
-      total += node.data.price;
+        if(node.data.include)
+            total += node.data.price;
     }
 
     return (
@@ -35,7 +55,7 @@ export function PricingMain() {
                         {nodes.map((node) => (
                             <TableRow key={node.id}>
                                 <TableCell>
-                                    <Checkbox />
+                                    <Checkbox checked={node.data.include} onCheckedChange={() => handleChecked(node.id, node.data.include)}/>
                                 </TableCell>
                                 <TableCell>{formalizeItemType(node.data.itemType)}</TableCell>
                                 <TableCell className="whitespace-normal break-words">{node.data.item.brand} {node.data.item.name}</TableCell>
