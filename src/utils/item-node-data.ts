@@ -6,4 +6,5 @@ export type ItemNodeData = {
     item: Item,
     price: number,
     include: boolean,
+    rotation: number,
 }

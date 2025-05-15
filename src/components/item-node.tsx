@@ -1,5 +1,4 @@
-import { baseUrl, ItemType } from "@/api/constants";
-import { Item } from "@/api/models";
+import { baseUrl } from "@/api/constants";
 import { INCH } from "@/utils/constants";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
@@ -13,16 +12,11 @@ import { Input } from "./ui/input";
 import { useFlowStore } from "@/hooks/use-flow-store";
 import { ItemNodeData } from "@/utils/item-node-data";
 
-type ItemNodeProps = {
-    itemType: ItemType,
-    item: Item,
-    price: number,
-}
-
-export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeProps, selected: boolean, }) {
+export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeData, selected: boolean, }) {
 
     const { getNodes, addNodes, deleteElements } = useReactFlow();
     const setNodes = useFlowStore((state) => state.setNodes);
+    const [rotation, setRotation] = useState<number>(data.rotation);
     const [price, setPrice] = useState<number>(data.price);
 
     useEffect(() => {
@@ -34,16 +28,16 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeP
                     data: {
                         ...node.data,
                         price: price,
+                        rotation: rotation,
                     },
                     };
                 }
                 return node;
             }),
         );
-    }, [price, setNodes]);
+    }, [price, rotation, setNodes]);
 
     //rotation logic
-    const [rotation, setRotation] = useState<number>(0);
     const rotateItem = useCallback((clockwise: boolean) => {
         if(rotation % 90 != 0)
             setRotation(0)

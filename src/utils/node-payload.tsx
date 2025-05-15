@@ -30,6 +30,7 @@ export function createDefaultNode(item: Item, itemType: ItemType): NodePayload {
             item: item,
             price: 0,
             include: true,
+            rotation: 0,
         },
         position: {
             x: 0,
@@ -51,12 +52,7 @@ export function createNodeCopy(node: Node<ItemNodeData>): NodePayload {
         type: 'itemNode',
         draggable: true,
         selectable: true,
-        data: {
-            itemType: node.data.itemType,
-            item: node.data.item,
-            price: node.data.price,
-            include: node.data.include,
-        },
+        data: node.data,
         position: node.position,
         style: {
             filter: 'drop-shadow(rgb(0, 0, 0, 0.5) 5px 5px 3px)',
