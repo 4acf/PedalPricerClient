@@ -37,10 +37,6 @@ export function AppMenubar() {
         }
     }
 
-    const changeColorScheme = (value: string) => {
-        setColorScheme(value);
-    }
-
     return (
         <Menubar>
             <MenubarMenu>
@@ -62,7 +58,7 @@ export function AppMenubar() {
                     <MenubarSub>
                         <MenubarSubTrigger>Color Scheme</MenubarSubTrigger>
                         <MenubarSubContent>
-                            <MenubarRadioGroup value={colorScheme} onValueChange={changeColorScheme}>
+                            <MenubarRadioGroup value={colorScheme} onValueChange={setColorScheme}>
                                 {colorSchemes.map((colorScheme) => (
                                     <MenubarRadioItem value={colorScheme.toLowerCase()}>{capitalizeFirstLetter(colorScheme)}</MenubarRadioItem>
                                 ))}
