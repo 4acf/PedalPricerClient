@@ -24,12 +24,12 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
             nds.map((node) => {
                 if(node.id === id){
                     return {
-                    ...node,
-                    data: {
-                        ...node.data,
-                        price: price,
-                        rotation: rotation,
-                    },
+                        ...node,
+                        data: {
+                            ...node.data,
+                            price: price,
+                            rotation: rotation,
+                        },
                     };
                 }
                 return node;

@@ -26,6 +26,7 @@ import {
 import { useCallback } from "react";
 import { Button } from "./ui/button";
 import { PricingMain } from "./pricing-main";
+import { AboutMain } from "./about-main";
 
 const selector = (s) => {
   return {
@@ -107,12 +108,19 @@ export function NavOptions({}) {
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem key="About">
-          <SidebarMenuButton onClick={unselectAll}
-            className="cursor-pointer transition-colors duration-150 ease-in-out"
-          >
-            <Info />
-            <span>About</span>
-          </SidebarMenuButton>
+          <Sheet>
+            <SheetTrigger asChild>
+              <SidebarMenuButton onClick={unselectAll}
+                className="cursor-pointer transition-colors duration-150 ease-in-out"
+              >
+                <Info />
+                <span>About</span>
+              </SidebarMenuButton>
+            </SheetTrigger>
+            <SheetContent>
+              <AboutMain />
+            </SheetContent>
+          </Sheet>
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
