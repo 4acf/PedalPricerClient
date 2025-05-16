@@ -47,7 +47,8 @@ export function AppMenubar() {
                 <MenubarTrigger>File</MenubarTrigger>
                 <MenubarContent>
                 <MenubarItem>
-                    Save<MenubarShortcut>⌘S</MenubarShortcut>
+                    Save
+                    <MenubarShortcut>⌘S</MenubarShortcut>
                 </MenubarItem>
                 <MenubarSeparator/>
                 <MenubarItem>Load</MenubarItem>
