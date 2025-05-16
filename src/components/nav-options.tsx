@@ -1,8 +1,6 @@
 import {
-  CircleHelp,
   DollarSign,
   Info,
-  Settings2,
   Trash2,
 } from "lucide-react"
 import {

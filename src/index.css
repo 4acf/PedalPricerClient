@@ -755,6 +755,30 @@ dont ask why 300 600 and 700 aren't even used
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
 
+.react-flow__controls button {
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-bottom: none;
+}
+ 
+.react-flow__controls button:hover {
+  background-color: rgb(37, 37, 37);
+}
+ 
+.react-flow__controls button:first-child {
+  border-radius: 5px 5px 0 0;
+}
+ 
+.react-flow__controls button:last-child {
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 0 5px 5px;
+}
+ 
+.react-flow__controls button path {
+  fill: var(--card-foreground);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -763,3 +787,4 @@ dont ask why 300 600 and 700 aren't even used
     @apply bg-background text-foreground;
   }
 }
+

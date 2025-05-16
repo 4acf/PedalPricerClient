@@ -1,5 +1,5 @@
 import { ItemNode } from "./item-node"
-import { ReactFlow, Background, BackgroundVariant, useNodesState, Node } from "@xyflow/react"
+import { ReactFlow, Background, BackgroundVariant, useNodesState, Node, Controls, MiniMap } from "@xyflow/react"
 import '@xyflow/react/dist/style.css';
 import { INCH } from "@/utils/constants";
 import { useFlowStore } from "@/hooks/use-flow-store";
@@ -30,7 +30,12 @@ export function ReactFlowWrapper() {
             defaultViewport={defaultViewport}
             deleteKeyCode={[]}
             elevateNodesOnSelect={false}
+            fitView
         >
+            <Controls 
+                showInteractive={false}
+                position="top-left"
+            />
             <Background variant={BackgroundVariant.Dots} color="#6b6b6b" />
         </ReactFlow>
     )

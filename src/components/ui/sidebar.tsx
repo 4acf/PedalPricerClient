@@ -24,6 +24,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useStore } from "@xyflow/react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -253,12 +254,20 @@ function Sidebar({
   )
 }
 
+const selector = (s) => {
+  return {
+    unselectAll: s.unselectNodesAndEdges
+  };
+};
+
 function SidebarTrigger({
   className,
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar()
+  const isMobile = useIsMobile()
+  const { unselectAll } = useStore(selector)
 
   return (
     <Button
@@ -270,6 +279,8 @@ function SidebarTrigger({
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
+        if(isMobile)
+          unselectAll()
       }}
       {...props}
     >
