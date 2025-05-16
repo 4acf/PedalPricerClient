@@ -139,11 +139,11 @@ dont ask why 300 600 and 700 aren't even used
 */
 
 .scheme-emerald {
-  --background: oklch(1 0 0);
+  --background: oklch(0.98 0 0);
   --foreground: oklch(0.26 0.05 173);
-  --card: oklch(1 0 0);
+  --card: oklch(0.98 0 0);
   --card-foreground: oklch(0.26 0.05 173);
-  --popover: oklch(1 0 0);
+  --popover: oklch(0.98 0 0);
   --popover-foreground: oklch(0.26 0.05 173);
   --primary: oklch(0.38 0.07 169);
   --primary-foreground: oklch(0.98 0.02 166);
@@ -154,9 +154,9 @@ dont ask why 300 600 and 700 aren't even used
   --accent: oklch(0.95 0.05 163);
   --accent-foreground: oklch(0.38 0.07 169);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.90 0.09 164);
-  --input: oklch(0.90 0.09 164);
-  --ring: oklch(0.77 0.15 163);
+  --border: oklch(0.85 0.09 164);
+  --input: oklch(0.85 0.09 164);
+  --ring: oklch(0.70 0.15 163);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -168,8 +168,8 @@ dont ask why 300 600 and 700 aren't even used
   --sidebar-primary-foreground: oklch(0.98 0.02 166);
   --sidebar-accent: oklch(0.95 0.05 163);
   --sidebar-accent-foreground: oklch(0.38 0.07 169);
-  --sidebar-border: oklch(0.90 0.09 164);
-  --sidebar-ring: oklch(0.77 0.15 163);
+  --sidebar-border: oklch(0.85 0.09 164);
+  --sidebar-ring: oklch(0.70 0.15 163);
 }
 
 .dark.scheme-emerald {
@@ -208,37 +208,37 @@ dont ask why 300 600 and 700 aren't even used
 
 .scheme-gray {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.13 0.028 261.692);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.13 0.028 261.692);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0.028 261.692);
-  --primary: oklch(0.21 0.034 264.665);
-  --primary-foreground: oklch(0.985 0.002 247.839);
-  --secondary: oklch(0.967 0.003 264.542);
-  --secondary-foreground: oklch(0.21 0.034 264.665);
-  --muted: oklch(0.967 0.003 264.542);
-  --muted-foreground: oklch(0.551 0.027 264.364);
-  --accent: oklch(0.967 0.003 264.542);
-  --accent-foreground: oklch(0.21 0.034 264.665);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.928 0.006 264.531);
-  --input: oklch(0.928 0.006 264.531);
-  --ring: oklch(0.707 0.022 261.325);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0.002 247.839);
-  --sidebar-foreground: oklch(0.13 0.028 261.692);
-  --sidebar-primary: oklch(0.21 0.034 264.665);
-  --sidebar-primary-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-accent: oklch(0.967 0.003 264.542);
-  --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
-  --sidebar-border: oklch(0.928 0.006 264.531);
-  --sidebar-ring: oklch(0.707 0.022 261.325);
+  --background: oklch(0.98 0 0);
+  --foreground: oklch(0.12 0.025 261.692);
+  --card: oklch(0.98 0 0);
+  --card-foreground: oklch(0.12 0.025 261.692);
+  --popover: oklch(0.98 0 0);
+  --popover-foreground: oklch(0.12 0.025 261.692);
+  --primary: oklch(0.18 0.03 264.665);
+  --primary-foreground: oklch(0.96 0.002 247.839);
+  --secondary: oklch(0.94 0.003 264.542);
+  --secondary-foreground: oklch(0.18 0.03 264.665);
+  --muted: oklch(0.94 0.003 264.542);
+  --muted-foreground: oklch(0.53 0.025 264.364);
+  --accent: oklch(0.94 0.003 264.542);
+  --accent-foreground: oklch(0.18 0.03 264.665);
+  --destructive: oklch(0.52 0.22 27.325);
+  --border: oklch(0.88 0.006 264.531);
+  --input: oklch(0.88 0.006 264.531);
+  --ring: oklch(0.68 0.02 261.325);
+  --chart-1: oklch(0.6 0.22 41.116);
+  --chart-2: oklch(0.56 0.11 184.704);
+  --chart-3: oklch(0.38 0.07 227.392);
+  --chart-4: oklch(0.78 0.18 84.429);
+  --chart-5: oklch(0.72 0.18 70.08);
+  --sidebar: oklch(0.96 0.002 247.839);
+  --sidebar-foreground: oklch(0.12 0.025 261.692);
+  --sidebar-primary: oklch(0.18 0.03 264.665);
+  --sidebar-primary-foreground: oklch(0.96 0.002 247.839);
+  --sidebar-accent: oklch(0.94 0.003 264.542);
+  --sidebar-accent-foreground: oklch(0.18 0.03 264.665);
+  --sidebar-border: oklch(0.88 0.006 264.531);
+  --sidebar-ring: oklch(0.68 0.02 261.325);
 }
 
 .dark.scheme-gray {
@@ -276,37 +276,37 @@ dont ask why 300 600 and 700 aren't even used
 }
 
 .scheme-indigo {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.26 0.09 281);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.26 0.09 281);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.26 0.09 281);
-  --primary: oklch(0.36 0.14 279);
-  --primary-foreground: oklch(0.96 0.02 272);
-  --secondary: oklch(0.93 0.03 273);
-  --secondary-foreground: oklch(0.36 0.14 279);
-  --muted: oklch(0.93 0.03 273);
-  --muted-foreground: oklch(0.59 0.20 277);
-  --accent: oklch(0.93 0.03 273);
-  --accent-foreground: oklch(0.36 0.14 279);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.87 0.06 274);
-  --input: oklch(0.87 0.06 274);
-  --ring: oklch(0.68 0.16 277);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.96 0.02 272);
-  --sidebar-foreground: oklch(0.26 0.09 281);
-  --sidebar-primary: oklch(0.36 0.14 279);
-  --sidebar-primary-foreground: oklch(0.96 0.02 272);
-  --sidebar-accent: oklch(0.93 0.03 273);
-  --sidebar-accent-foreground: oklch(0.36 0.14 279);
-  --sidebar-border: oklch(0.87 0.06 274);
-  --sidebar-ring: oklch(0.68 0.16 277);
+  --background: oklch(0.95 0 0);
+  --foreground: oklch(0.24 0.07 281);
+  --card: oklch(0.95 0 0);
+  --card-foreground: oklch(0.24 0.07 281);
+  --popover: oklch(0.95 0 0);
+  --popover-foreground: oklch(0.24 0.07 281);
+  --primary: oklch(0.33 0.12 279);
+  --primary-foreground: oklch(0.91 0.02 272);
+  --secondary: oklch(0.89 0.02 273);
+  --secondary-foreground: oklch(0.33 0.12 279);
+  --muted: oklch(0.89 0.02 273);
+  --muted-foreground: oklch(0.55 0.18 277);
+  --accent: oklch(0.89 0.02 273);
+  --accent-foreground: oklch(0.33 0.12 279);
+  --destructive: oklch(0.52 0.22 27.325);
+  --border: oklch(0.84 0.05 274);
+  --input: oklch(0.84 0.05 274);
+  --ring: oklch(0.65 0.14 277);
+  --chart-1: oklch(0.6 0.2 41.116);
+  --chart-2: oklch(0.56 0.1 184.704);
+  --chart-3: oklch(0.36 0.06 227.392);
+  --chart-4: oklch(0.78 0.17 84.429);
+  --chart-5: oklch(0.72 0.17 70.08);
+  --sidebar: oklch(0.91 0.02 272);
+  --sidebar-foreground: oklch(0.24 0.07 281);
+  --sidebar-primary: oklch(0.33 0.12 279);
+  --sidebar-primary-foreground: oklch(0.91 0.02 272);
+  --sidebar-accent: oklch(0.89 0.02 273);
+  --sidebar-accent-foreground: oklch(0.33 0.12 279);
+  --sidebar-border: oklch(0.84 0.05 274);
+  --sidebar-ring: oklch(0.65 0.14 277);
 }
 
 .dark.scheme-indigo {
@@ -343,39 +343,39 @@ dont ask why 300 600 and 700 aren't even used
   --sidebar-ring: oklch(0.55 0.11 277);
 }
 
-.scheme-neutral  {
+.scheme-neutral {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: oklch(0.95 0 0);
+  --foreground: oklch(0.12 0 0);
+  --card: oklch(0.95 0 0);
+  --card-foreground: oklch(0.12 0 0);
+  --popover: oklch(0.95 0 0);
+  --popover-foreground: oklch(0.12 0 0);
+  --primary: oklch(0.18 0 0);
+  --primary-foreground: oklch(0.92 0 0);
+  --secondary: oklch(0.93 0 0);
+  --secondary-foreground: oklch(0.18 0 0);
+  --muted: oklch(0.93 0 0);
+  --muted-foreground: oklch(0.53 0 0);
+  --accent: oklch(0.93 0 0);
+  --accent-foreground: oklch(0.18 0 0);
+  --destructive: oklch(0.52 0.2 27.325);
+  --border: oklch(0.88 0 0);
+  --input: oklch(0.88 0 0);
+  --ring: oklch(0.68 0 0);
+  --chart-1: oklch(0.6 0.2 41.116);
+  --chart-2: oklch(0.56 0.1 184.704);
+  --chart-3: oklch(0.36 0.06 227.392);
+  --chart-4: oklch(0.78 0.17 84.429);
+  --chart-5: oklch(0.72 0.17 70.08);
+  --sidebar: oklch(0.92 0 0);
+  --sidebar-foreground: oklch(0.12 0 0);
+  --sidebar-primary: oklch(0.18 0 0);
+  --sidebar-primary-foreground: oklch(0.92 0 0);
+  --sidebar-accent: oklch(0.93 0 0);
+  --sidebar-accent-foreground: oklch(0.18 0 0);
+  --sidebar-border: oklch(0.88 0 0);
+  --sidebar-ring: oklch(0.68 0 0);
 }
 
 .dark.scheme-neutral {
@@ -412,39 +412,39 @@ dont ask why 300 600 and 700 aren't even used
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-.scheme-slate  {
+.scheme-slate {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --background: oklch(0.95 0 0);
+  --foreground: oklch(0.12 0.035 264.695);
+  --card: oklch(0.95 0 0);
+  --card-foreground: oklch(0.12 0.035 264.695);
+  --popover: oklch(0.95 0 0);
+  --popover-foreground: oklch(0.12 0.035 264.695);
+  --primary: oklch(0.18 0.035 265.755);
+  --primary-foreground: oklch(0.92 0.003 247.858);
+  --secondary: oklch(0.93 0.005 247.896);
+  --secondary-foreground: oklch(0.18 0.035 265.755);
+  --muted: oklch(0.93 0.005 247.896);
+  --muted-foreground: oklch(0.55 0.04 257.417);
+  --accent: oklch(0.93 0.005 247.896);
+  --accent-foreground: oklch(0.18 0.035 265.755);
+  --destructive: oklch(0.52 0.2 27.325);
+  --border: oklch(0.86 0.02 255.508);
+  --input: oklch(0.86 0.02 255.508);
+  --ring: oklch(0.68 0.03 256.788);
+  --chart-1: oklch(0.6 0.2 41.116);
+  --chart-2: oklch(0.56 0.1 184.704);
+  --chart-3: oklch(0.36 0.06 227.392);
+  --chart-4: oklch(0.78 0.17 84.429);
+  --chart-5: oklch(0.72 0.17 70.08);
+  --sidebar: oklch(0.92 0.003 247.858);
+  --sidebar-foreground: oklch(0.12 0.035 264.695);
+  --sidebar-primary: oklch(0.18 0.035 265.755);
+  --sidebar-primary-foreground: oklch(0.92 0.003 247.858);
+  --sidebar-accent: oklch(0.93 0.005 247.896);
+  --sidebar-accent-foreground: oklch(0.18 0.035 265.755);
+  --sidebar-border: oklch(0.85 0.015 255.508);
+  --sidebar-ring: oklch(0.68 0.03 256.788);
 }
 
 .dark.scheme-slate {
@@ -483,37 +483,37 @@ dont ask why 300 600 and 700 aren't even used
 
 .scheme-stone {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.147 0.004 49.25);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.147 0.004 49.25);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(0.216 0.006 56.043);
-  --primary-foreground: oklch(0.985 0.001 106.423);
-  --secondary: oklch(0.97 0.001 106.424);
-  --secondary-foreground: oklch(0.216 0.006 56.043);
-  --muted: oklch(0.97 0.001 106.424);
-  --muted-foreground: oklch(0.553 0.013 58.071);
-  --accent: oklch(0.97 0.001 106.424);
-  --accent-foreground: oklch(0.216 0.006 56.043);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.003 48.717);
-  --input: oklch(0.923 0.003 48.717);
-  --ring: oklch(0.709 0.01 56.259);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0.001 106.423);
-  --sidebar-foreground: oklch(0.147 0.004 49.25);
-  --sidebar-primary: oklch(0.216 0.006 56.043);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.97 0.001 106.424);
-  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
-  --sidebar-border: oklch(0.923 0.003 48.717);
-  --sidebar-ring: oklch(0.709 0.01 56.259);
+  --background: oklch(0.95 0 0);
+  --foreground: oklch(0.12 0.003 49.25);
+  --card: oklch(0.95 0 0);
+  --card-foreground: oklch(0.12 0.003 49.25);
+  --popover: oklch(0.95 0 0);
+  --popover-foreground: oklch(0.12 0.003 49.25);
+  --primary: oklch(0.18 0.005 56.043);
+  --primary-foreground: oklch(0.93 0.001 106.423);
+  --secondary: oklch(0.94 0.001 106.424);
+  --secondary-foreground: oklch(0.18 0.005 56.043);
+  --muted: oklch(0.94 0.001 106.424);
+  --muted-foreground: oklch(0.52 0.01 58.071);
+  --accent: oklch(0.94 0.001 106.424);
+  --accent-foreground: oklch(0.18 0.005 56.043);
+  --destructive: oklch(0.52 0.2 27.325);
+  --border: oklch(0.87 0.003 48.717);
+  --input: oklch(0.87 0.003 48.717);
+  --ring: oklch(0.65 0.008 56.259);
+  --chart-1: oklch(0.6 0.2 41.116);
+  --chart-2: oklch(0.56 0.1 184.704);
+  --chart-3: oklch(0.36 0.06 227.392);
+  --chart-4: oklch(0.78 0.17 84.429);
+  --chart-5: oklch(0.72 0.17 70.08);
+  --sidebar: oklch(0.93 0.001 106.423);
+  --sidebar-foreground: oklch(0.12 0.003 49.25);
+  --sidebar-primary: oklch(0.18 0.005 56.043);
+  --sidebar-primary-foreground: oklch(0.93 0.001 106.423);
+  --sidebar-accent: oklch(0.94 0.001 106.424);
+  --sidebar-accent-foreground: oklch(0.18 0.005 56.043);
+  --sidebar-border: oklch(0.87 0.003 48.717);
+  --sidebar-ring: oklch(0.65 0.008 56.259);
 }
  
 .dark.scheme-stone {
@@ -551,37 +551,37 @@ dont ask why 300 600 and 700 aren't even used
 }
 
 .scheme-teal {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.28 0.04 193);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.28 0.04 193);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.28 0.04 193);
-  --primary: oklch(0.39 0.06 188);
-  --primary-foreground: oklch(0.98 0.01 181);
-  --secondary: oklch(0.95 0.05 181);
-  --secondary-foreground: oklch(0.39 0.06 188);
-  --muted: oklch(0.95 0.05 181);
-  --muted-foreground: oklch(0.70 0.12 183);
-  --accent: oklch(0.95 0.05 181);
-  --accent-foreground: oklch(0.39 0.06 188);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.91 0.09 180);
-  --input: oklch(0.91 0.09 180);
-  --ring: oklch(0.78 0.13 182);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.98 0.01 181);
-  --sidebar-foreground: oklch(0.28 0.04 193);
-  --sidebar-primary: oklch(0.39 0.06 188);
-  --sidebar-primary-foreground: oklch(0.98 0.01 181);
-  --sidebar-accent: oklch(0.95 0.05 181);
-  --sidebar-accent-foreground: oklch(0.39 0.06 188);
-  --sidebar-border: oklch(0.91 0.09 180);
-  --sidebar-ring: oklch(0.78 0.13 182);
+  --background: oklch(0.95 0 0);
+  --foreground: oklch(0.24 0.035 193);
+  --card: oklch(0.95 0 0);
+  --card-foreground: oklch(0.24 0.035 193);
+  --popover: oklch(0.95 0 0);
+  --popover-foreground: oklch(0.24 0.035 193);
+  --primary: oklch(0.35 0.05 188);
+  --primary-foreground: oklch(0.93 0.008 181);
+  --secondary: oklch(0.89 0.04 181);
+  --secondary-foreground: oklch(0.35 0.05 188);
+  --muted: oklch(0.89 0.04 181);
+  --muted-foreground: oklch(0.63 0.1 183);
+  --accent: oklch(0.89 0.04 181);
+  --accent-foreground: oklch(0.35 0.05 188);
+  --destructive: oklch(0.52 0.2 27.325);
+  --border: oklch(0.86 0.07 180);
+  --input: oklch(0.86 0.07 180);
+  --ring: oklch(0.72 0.11 182);
+  --chart-1: oklch(0.6 0.2 41.116);
+  --chart-2: oklch(0.56 0.1 184.704);
+  --chart-3: oklch(0.36 0.06 227.392);
+  --chart-4: oklch(0.78 0.17 84.429);
+  --chart-5: oklch(0.72 0.17 70.08);
+  --sidebar: oklch(0.93 0.008 181);
+  --sidebar-foreground: oklch(0.24 0.035 193);
+  --sidebar-primary: oklch(0.35 0.05 188);
+  --sidebar-primary-foreground: oklch(0.93 0.008 181);
+  --sidebar-accent: oklch(0.89 0.04 181);
+  --sidebar-accent-foreground: oklch(0.35 0.05 188);
+  --sidebar-border: oklch(0.86 0.07 180);
+  --sidebar-ring: oklch(0.72 0.11 182);
 }
 
 .dark.scheme-teal {
@@ -619,37 +619,37 @@ dont ask why 300 600 and 700 aren't even used
 }
 
 .scheme-violet {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.28 0.14 291);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.28 0.14 291);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.28 0.14 291);
-  --primary: oklch(0.38 0.18 294);
-  --primary-foreground: oklch(0.97 0.02 294);
-  --secondary: oklch(0.94 0.03 295);
-  --secondary-foreground: oklch(0.38 0.18 294);
-  --muted: oklch(0.94 0.03 295);
-  --muted-foreground: oklch(0.61 0.22 293);
-  --accent: oklch(0.94 0.03 295);
-  --accent-foreground: oklch(0.38 0.18 294);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.89 0.05 293);
-  --input: oklch(0.89 0.05 293);
-  --ring: oklch(0.71 0.16 294);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.97 0.02 294);
-  --sidebar-foreground: oklch(0.28 0.14 291);
-  --sidebar-primary: oklch(0.38 0.18 294);
-  --sidebar-primary-foreground: oklch(0.97 0.02 294);
-  --sidebar-accent: oklch(0.94 0.03 295);
-  --sidebar-accent-foreground: oklch(0.38 0.18 294);
-  --sidebar-border: oklch(0.89 0.05 293);
-  --sidebar-ring: oklch(0.71 0.16 294);
+  --background: oklch(0.95 0 0);
+  --foreground: oklch(0.24 0.12 291);
+  --card: oklch(0.95 0 0);
+  --card-foreground: oklch(0.24 0.12 291);
+  --popover: oklch(0.95 0 0);
+  --popover-foreground: oklch(0.24 0.12 291);
+  --primary: oklch(0.34 0.15 294);
+  --primary-foreground: oklch(0.92 0.015 294);
+  --secondary: oklch(0.88 0.025 295);
+  --secondary-foreground: oklch(0.34 0.15 294);
+  --muted: oklch(0.88 0.025 295);
+  --muted-foreground: oklch(0.55 0.19 293);
+  --accent: oklch(0.88 0.025 295);
+  --accent-foreground: oklch(0.34 0.15 294);
+  --destructive: oklch(0.52 0.2 27.325);
+  --border: oklch(0.83 0.04 293);
+  --input: oklch(0.83 0.04 293);
+  --ring: oklch(0.65 0.13 294);
+  --chart-1: oklch(0.6 0.2 41.116);
+  --chart-2: oklch(0.55 0.1 184.704);
+  --chart-3: oklch(0.36 0.06 227.392);
+  --chart-4: oklch(0.78 0.17 84.429);
+  --chart-5: oklch(0.72 0.17 70.08);
+  --sidebar: oklch(0.92 0.015 294);
+  --sidebar-foreground: oklch(0.24 0.12 291);
+  --sidebar-primary: oklch(0.34 0.15 294);
+  --sidebar-primary-foreground: oklch(0.92 0.015 294);
+  --sidebar-accent: oklch(0.88 0.025 295);
+  --sidebar-accent-foreground: oklch(0.34 0.15 294);
+  --sidebar-border: oklch(0.83 0.04 293);
+  --sidebar-ring: oklch(0.65 0.13 294);
 }
 
 .dark.scheme-violet {
@@ -687,38 +687,37 @@ dont ask why 300 600 and 700 aren't even used
 }
 
 .scheme-zinc {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --background: oklch(0.95 0 0);
+  --foreground: oklch(0.18 0.005 285.823);
+  --card: oklch(0.95 0 0);
+  --card-foreground: oklch(0.18 0.005 285.823);
+  --popover: oklch(0.95 0 0);
+  --popover-foreground: oklch(0.18 0.005 285.823);
+  --primary: oklch(0.19 0.006 285.885);
+  --primary-foreground: oklch(0.94 0 0);
+  --secondary: oklch(0.9 0.001 286.375);
+  --secondary-foreground: oklch(0.19 0.006 285.885);
+  --muted: oklch(0.9 0.001 286.375);
+  --muted-foreground: oklch(0.5 0.014 285.938);
+  --accent: oklch(0.9 0.001 286.375);
+  --accent-foreground: oklch(0.19 0.006 285.885);
+  --destructive: oklch(0.52 0.2 27.325);
+  --border: oklch(0.88 0.003 286.32);
+  --input: oklch(0.88 0.003 286.32);
+  --ring: oklch(0.65 0.012 286.067);
+  --chart-1: oklch(0.6 0.2 41.116);
+  --chart-2: oklch(0.56 0.1 184.704);
+  --chart-3: oklch(0.37 0.06 227.392);
+  --chart-4: oklch(0.78 0.17 84.429);
+  --chart-5: oklch(0.72 0.17 70.08);
+  --sidebar: oklch(0.94 0 0);
+  --sidebar-foreground: oklch(0.18 0.005 285.823);
+  --sidebar-primary: oklch(0.19 0.006 285.885);
+  --sidebar-primary-foreground: oklch(0.94 0 0);
+  --sidebar-accent: oklch(0.9 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.19 0.006 285.885);
+  --sidebar-border: oklch(0.88 0.003 286.32);
+  --sidebar-ring: oklch(0.65 0.012 286.067);
 }
  
 .dark.scheme-zinc {
@@ -763,7 +762,7 @@ dont ask why 300 600 and 700 aren't even used
 }
  
 .react-flow__controls button:hover {
-  background-color: rgb(37, 37, 37);
+  background-color: var(--secondary);
 }
  
 .react-flow__controls button:first-child {
