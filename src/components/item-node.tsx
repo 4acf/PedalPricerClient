@@ -11,6 +11,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useFlowStore } from "@/hooks/use-flow-store";
 import { ItemNodeData } from "@/utils/item-node-data";
+import { useDisplayConfig } from "@/hooks/use-display-config";
 
 export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeData, selected: boolean, }) {
 
@@ -18,6 +19,9 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
     const setNodes = useFlowStore((state) => state.setNodes);
     const [rotation, setRotation] = useState<number>(data.rotation);
     const [price, setPrice] = useState<number>(data.price);
+    const itemBorders = useDisplayConfig((state) => state.itemBorders);
+    const infoCards = useDisplayConfig((state) => state.infoCards);
+    const contextMenus = useDisplayConfig((state) => state.contextMenus);
 
     useEffect(() => {
         setNodes((nds) =>
@@ -147,14 +151,14 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
                 <div
                     className={clsx(
                         'border rounded transition-colors duration-200 p-[2px]',
-                        selected ? 'border-[#3f85eb]' : 'border-transparent',
-                        selected ? 'hover:border-[#3f85eb]' : 'hover:border-[rgb(63,133,235,0.5)]',
+                        (selected && itemBorders) ? 'border-[#3f85eb]' : 'border-transparent',
+                        (selected && itemBorders) ? 'hover:border-[#3f85eb]' : itemBorders && 'hover:border-[rgb(63,133,235,0.5)]',
                     )}
                     style={{
                         transform: `rotate(${rotation}deg)`,
                         transition: '0.3s',
                     }}
-                    onClick={() => toast(`${item.brand} ${item.name}`, {
+                    onClick={() => infoCards && toast(`${item.brand} ${item.name}`, {
                         duration: Infinity,
                         description: (
                             <ul className="flex-row space-y-1 pt-1">
@@ -185,35 +189,39 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
                     />
                 </div>
             </ContextMenuTrigger>
-            <ContextMenuContent>
-                <ContextMenuItem onMouseUp={() => rotateItem(true)}>
-                    Rotate Clockwise
-                    <ContextMenuShortcut>E</ContextMenuShortcut>
-                </ContextMenuItem>
-                <ContextMenuItem onMouseUp={() => rotateItem(false)}>
-                    Rotate Counter-Clockwise
-                    <ContextMenuShortcut>Q</ContextMenuShortcut>
-                </ContextMenuItem>
-                <ContextMenuSeparator />
-                <ContextMenuItem onMouseUp={deleteItem}>
-                    Delete
-                    <ContextMenuShortcut>&#x232B;</ContextMenuShortcut>
-                </ContextMenuItem>
-                <ContextMenuSeparator />
-                <ContextMenuItem onMouseUp={duplicateItem}>
-                    Duplicate
-                    <ContextMenuShortcut>D</ContextMenuShortcut>
-                </ContextMenuItem>
-                <ContextMenuSeparator />
-                <ContextMenuItem onMouseUp={moveToFront}>
-                    Move to Front
-                    <ContextMenuShortcut>W</ContextMenuShortcut>
-                </ContextMenuItem>
-                <ContextMenuItem onMouseUp={moveToBack}>
-                    Move to Back
-                    <ContextMenuShortcut>S</ContextMenuShortcut>
-                </ContextMenuItem>
-            </ContextMenuContent>
+            {
+                contextMenus && (
+                    <ContextMenuContent>
+                        <ContextMenuItem onMouseUp={() => rotateItem(true)}>
+                            Rotate Clockwise
+                            <ContextMenuShortcut>E</ContextMenuShortcut>
+                        </ContextMenuItem>
+                        <ContextMenuItem onMouseUp={() => rotateItem(false)}>
+                            Rotate Counter-Clockwise
+                            <ContextMenuShortcut>Q</ContextMenuShortcut>
+                        </ContextMenuItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuItem onMouseUp={deleteItem}>
+                            Delete
+                            <ContextMenuShortcut>&#x232B;</ContextMenuShortcut>
+                        </ContextMenuItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuItem onMouseUp={duplicateItem}>
+                            Duplicate
+                            <ContextMenuShortcut>D</ContextMenuShortcut>
+                        </ContextMenuItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuItem onMouseUp={moveToFront}>
+                            Move to Front
+                            <ContextMenuShortcut>W</ContextMenuShortcut>
+                        </ContextMenuItem>
+                        <ContextMenuItem onMouseUp={moveToBack}>
+                            Move to Back
+                            <ContextMenuShortcut>S</ContextMenuShortcut>
+                        </ContextMenuItem>
+                    </ContextMenuContent>
+                )
+            }
         </ContextMenu>
     )
 

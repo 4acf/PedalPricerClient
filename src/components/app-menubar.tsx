@@ -17,11 +17,13 @@ import { useTheme } from "./theme-provider"
 import { useColorScheme } from "./color-scheme-provider";
 import { colorSchemes } from "./color-scheme-provider";
 import { capitalizeFirstLetter } from "@/utils/string-formatting";
+import { useDisplayConfig } from "@/hooks/use-display-config";
 
 export function AppMenubar() {
     
     const { theme, setTheme } = useTheme(); 
     const { colorScheme, setColorScheme } = useColorScheme();
+    const config = useDisplayConfig(); 
 
     const toggleTheme = () => {
         switch (theme) {
@@ -52,7 +54,7 @@ export function AppMenubar() {
                 </MenubarContent>
             </MenubarMenu>
             <MenubarMenu>
-                <MenubarTrigger>Theme</MenubarTrigger>
+                <MenubarTrigger>View</MenubarTrigger>
                 <MenubarContent>
                     <MenubarCheckboxItem checked={theme === "dark"} onCheckedChange={toggleTheme}>Dark Mode</MenubarCheckboxItem>
                     <MenubarSeparator />
@@ -66,6 +68,10 @@ export function AppMenubar() {
                             </MenubarRadioGroup>
                         </MenubarSubContent>
                     </MenubarSub>
+                    <MenubarSeparator />
+                    <MenubarCheckboxItem checked={config.itemBorders} onCheckedChange={config.setItemBorders}>Item Borders</MenubarCheckboxItem>
+                    <MenubarCheckboxItem checked={config.infoCards} onCheckedChange={config.setInfoCards}>Info Cards</MenubarCheckboxItem>
+                    <MenubarCheckboxItem checked={config.contextMenus} onCheckedChange={config.setContextMenus}>Context Menus</MenubarCheckboxItem>
                 </MenubarContent>
             </MenubarMenu>
         </Menubar>

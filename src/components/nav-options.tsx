@@ -91,22 +91,6 @@ export function NavOptions({}) {
             </SheetContent>
           </Sheet>
         </SidebarMenuItem>
-        <SidebarMenuItem key="Config">
-          <SidebarMenuButton onClick={unselectAll} 
-            className="cursor-pointer transition-colors duration-150 ease-in-out"
-          >
-            <Settings2 />
-            <span>Config</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-        <SidebarMenuItem key="Help">
-          <SidebarMenuButton onClick={unselectAll} 
-            className="cursor-pointer transition-colors duration-150 ease-in-out"
-          >
-            <CircleHelp />
-            <span>Help</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
         <SidebarMenuItem key="About">
           <Sheet>
             <SheetTrigger asChild>
