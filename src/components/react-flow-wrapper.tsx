@@ -10,15 +10,23 @@ const nodeTypes = {
   };
 const defaultViewport = { x: INCH, y: INCH, zoom: 1 };
 
+const storageKey = "nodes";
+
 export function ReactFlowWrapper() {
 
-    const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+    const [nodes, setNodes, onNodesChange] = useNodesState<Node>(
+    JSON.parse(localStorage.getItem(storageKey) ?? "[]") as Node[]
+);
     const setNodesUpdater = useFlowStore((state) => state.setNodesUpdater);
 
     //make setNodes global
     useEffect(() => {
         setNodesUpdater(setNodes);
     }, [setNodes, setNodesUpdater])
+
+    useEffect(() => {
+        localStorage.setItem(storageKey, JSON.stringify(nodes));
+    }, [nodes]);
 
     return (
         <ReactFlow 
