@@ -19,10 +19,11 @@ import { colorSchemes } from "./color-scheme-provider";
 import { capitalizeFirstLetter } from "@/utils/string-formatting";
 import { useDisplayConfig } from "@/hooks/use-display-config";
 import { NODES_STORAGE_KEY } from "@/utils/constants";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Node, useReactFlow } from "@xyflow/react";
 import { createNodeCopy } from "@/utils/node-payload";
 import { ItemNodeData } from "@/utils/item-node-data";
+import { useHistory } from "@/hooks/use-history";
 
 const downloadFile = () => {
 
@@ -53,6 +54,7 @@ export function AppMenubar() {
     const config = useDisplayConfig(); 
     const inputFile = useRef<HTMLInputElement>(null);
     const { addNodes } = useReactFlow();
+    const { undo, redo } = useHistory();
 
     const openFileDialog = useCallback(() => {
         if(!inputFile || !inputFile.current)
@@ -94,6 +96,21 @@ export function AppMenubar() {
         }
     }
 
+    useEffect(() => {
+        const handleKeydownSave = (e: KeyboardEvent) => {
+            if((e.key == 'z' || e.key == 'Z') && e.ctrlKey){
+                undo();
+            }
+            else if((e.key == 'y' || e.key == 'Y') && e.ctrlKey){
+                redo();
+            }
+        }
+        window.addEventListener('keydown', handleKeydownSave);
+        return () => {
+            window.removeEventListener('keydown', handleKeydownSave);
+        };
+    }, []);
+
     return (
         <>
             <input type="file" ref={inputFile} style={{display: "none"}} onChange={readFile} />
@@ -101,14 +118,26 @@ export function AppMenubar() {
                 <MenubarMenu>
                     <MenubarTrigger>File</MenubarTrigger>
                     <MenubarContent>
-                    <MenubarItem onClick={downloadFile}>
-                        Save
-                        <MenubarShortcut>⌘S</MenubarShortcut>
-                    </MenubarItem>
-                    <MenubarSeparator/>
-                    <MenubarItem onClick={openFileDialog}>
-                        Load
-                    </MenubarItem>
+                        <MenubarItem onClick={downloadFile}>
+                            Save
+                        </MenubarItem>
+                        <MenubarSeparator/>
+                        <MenubarItem onClick={openFileDialog}>
+                            Load
+                        </MenubarItem>
+                    </MenubarContent>
+                </MenubarMenu>
+                <MenubarMenu>
+                    <MenubarTrigger>Edit</MenubarTrigger>
+                    <MenubarContent>
+                        <MenubarItem onClick={undo}>
+                            Undo
+                            <MenubarShortcut>⌘Z</MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem onClick={redo}>
+                            Redo
+                            <MenubarShortcut>⌘Y</MenubarShortcut>
+                        </MenubarItem>
                     </MenubarContent>
                 </MenubarMenu>
                 <MenubarMenu>

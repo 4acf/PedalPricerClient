@@ -29,6 +29,9 @@ import { ItemPreview } from "@/api/models"
 import { GetInfo, GetItems } from "@/api/api"
 import { useReactFlow } from "@xyflow/react"  
 import { createDefaultNode } from "@/utils/node-payload"
+import { ActionFactory } from "@/factory/action-factory"
+import { useHistory } from "@/hooks/use-history"
+import { toast } from "sonner"
 
 type BrandOption = {
     label: string,
@@ -51,7 +54,8 @@ export function NavSubmenu({
     const [label, setLabel] = useState<string>("");
     const [selectedID, setSelectedID] = useState<string>("");
     const [brandOptions, setBrandOptions] = useState<BrandOption[]>([]);
-    const { addNodes } = useReactFlow();
+    const { addNodes, deleteElements } = useReactFlow();
+    const { appendAction } = useHistory();
 
     const addItem = useCallback(async () => {
 
@@ -60,7 +64,19 @@ export function NavSubmenu({
 
         const items = await GetItems(item.api, [selectedID]);
         items.forEach(element => {
-            addNodes(createDefaultNode(element, item.api));
+            const newNode = createDefaultNode(element, item.api);
+            addNodes(newNode);
+            const action = ActionFactory.Create(
+                () => {
+                    const id = newNode.id;
+                    deleteElements({ nodes: [{ id: id }]});
+                    toast.dismiss();
+                },
+                () => {
+                    addNodes(newNode);  
+                }
+            );
+            appendAction(action);
         });
 
     }, [selectedID]);
