@@ -121,7 +121,7 @@ export function AppMenubar() {
                             <MenubarSubContent>
                                 <MenubarRadioGroup value={colorScheme} onValueChange={setColorScheme}>
                                     {colorSchemes.map((colorScheme) => (
-                                        <MenubarRadioItem value={colorScheme.toLowerCase()}>{capitalizeFirstLetter(colorScheme)}</MenubarRadioItem>
+                                        <MenubarRadioItem value={colorScheme.toLowerCase()} key={colorScheme}>{capitalizeFirstLetter(colorScheme)}</MenubarRadioItem>
                                     ))}
                                 </MenubarRadioGroup>
                             </MenubarSubContent>
