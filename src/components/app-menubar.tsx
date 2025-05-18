@@ -19,7 +19,7 @@ import { colorSchemes } from "./color-scheme-provider";
 import { capitalizeFirstLetter } from "@/utils/string-formatting";
 import { useDisplayConfig } from "@/hooks/use-display-config";
 import { NODES_STORAGE_KEY } from "@/utils/constants";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Node, useReactFlow } from "@xyflow/react";
 import { createNodeCopy } from "@/utils/node-payload";
 import { ItemNodeData } from "@/utils/item-node-data";
@@ -78,7 +78,8 @@ export function AppMenubar() {
             console.error("Error reading file:", e);
         }
         reader.readAsText(file);
-
+        event.target.value = '';
+        
     },[]);
 
     const toggleTheme = () => {
@@ -92,6 +93,19 @@ export function AppMenubar() {
             break;
         }
     }
+
+    useEffect(() => {
+        const handleKeydownSave = (e: KeyboardEvent) => {
+            e.preventDefault();
+            if((e.key == 's' || e.key == 'S') && e.ctrlKey){
+                downloadFile();
+            }
+        }
+        window.addEventListener('keydown', handleKeydownSave);
+        return () => {
+            window.removeEventListener('keydown', handleKeydownSave);
+        };
+    }, []);
 
     return (
         <>
