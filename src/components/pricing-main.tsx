@@ -1,4 +1,4 @@
-import { SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
+import { SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "./ui/table";
 import { Node, useReactFlow } from "@xyflow/react";
 import { formalizeItemType, toUSD } from "@/utils/string-formatting";
@@ -40,6 +40,7 @@ export function PricingMain() {
         <>
             <SheetHeader>
                 <SheetTitle>Pricing</SheetTitle>
+                <SheetDescription></SheetDescription>
             </SheetHeader>
             <div className="px-5 overflow-auto">
                 <Table>

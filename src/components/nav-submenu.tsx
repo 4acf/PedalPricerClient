@@ -140,7 +140,7 @@ export function NavSubmenu({
                                     <CommandList>
                                         <CommandEmpty>No items found.</CommandEmpty>
                                         {brandOptions.map((brandOption) => (
-                                            <CommandGroup heading={brandOption.label}>
+                                            <CommandGroup heading={brandOption.label} key={brandOption.label}>
                                             {brandOption.options.map((option) => (
                                                 <CommandItem
                                                     key={option.id}

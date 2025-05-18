@@ -24,7 +24,7 @@ export function NavMain({
       <SidebarGroupLabel>Add Items</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <NavSubmenu item={item}></NavSubmenu>
+          <NavSubmenu item={item} key={item.api}></NavSubmenu>
         ))}
       </SidebarMenu>
     </SidebarGroup>

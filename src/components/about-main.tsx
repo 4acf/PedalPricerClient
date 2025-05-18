@@ -1,11 +1,12 @@
 import { Button } from "./ui/button";
-import { SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
+import { SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "./ui/sheet";
 
 export function AboutMain() {
     return (
         <>
             <SheetHeader>
                 <SheetTitle>About</SheetTitle>
+                <SheetDescription></SheetDescription>
             </SheetHeader>
             <div className="px-6 py-10 max-w-3xl mx-auto space-y-10 text-pretty overflow-auto">
 
