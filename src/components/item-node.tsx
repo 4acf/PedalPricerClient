@@ -88,7 +88,20 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
         const node = nodes.find(n => n.id === id);
         if(!node)
             return;  
-        addNodes(createNodeCopy(node));
+        const newNode = createNodeCopy(node);
+        addNodes(newNode);
+
+        const action = ActionFactory.Create(
+            () => {        
+                deleteElements({ nodes: [{ id: newNode.id }]});
+                toast.dismiss();
+            },
+            () => {
+                addNodes(newNode);  
+            }
+        );
+        appendAction(action);
+
     }, [data]);
     
     //arrangement logic
