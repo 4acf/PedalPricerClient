@@ -55,6 +55,8 @@ export function AppMenubar() {
     const inputFile = useRef<HTMLInputElement>(null);
     const { addNodes } = useReactFlow();
     const { undo, redo } = useHistory();
+    const undoStack = useHistory((state) => state.undoStack);
+    const redoStack = useHistory((state) => state.redoStack);
 
     const openFileDialog = useCallback(() => {
         if(!inputFile || !inputFile.current)
@@ -98,10 +100,10 @@ export function AppMenubar() {
 
     useEffect(() => {
         const handleKeydownSave = (e: KeyboardEvent) => {
-            if((e.key == 'z' || e.key == 'Z') && e.ctrlKey){
+            if((e.key == 'z' || e.key == 'Z') && e.ctrlKey && !undoStack.isEmpty()){
                 undo();
             }
-            else if((e.key == 'y' || e.key == 'Y') && e.ctrlKey){
+            else if((e.key == 'y' || e.key == 'Y') && e.ctrlKey && !redoStack.isEmpty()){
                 redo();
             }
         }
@@ -130,12 +132,12 @@ export function AppMenubar() {
                 <MenubarMenu>
                     <MenubarTrigger>Edit</MenubarTrigger>
                     <MenubarContent>
-                        <MenubarItem onClick={undo}>
+                        <MenubarItem onClick={undo} disabled={undoStack.isEmpty()}>
                             Undo
                             <MenubarShortcut>⌘Z</MenubarShortcut>
                         </MenubarItem>
                         <MenubarSeparator />
-                        <MenubarItem onClick={redo}>
+                        <MenubarItem onClick={redo} disabled={redoStack.isEmpty()}>
                             Redo
                             <MenubarShortcut>⌘Y</MenubarShortcut>
                         </MenubarItem>
