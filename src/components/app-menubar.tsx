@@ -134,6 +134,7 @@ export function AppMenubar() {
                             Undo
                             <MenubarShortcut>⌘Z</MenubarShortcut>
                         </MenubarItem>
+                        <MenubarSeparator />
                         <MenubarItem onClick={redo}>
                             Redo
                             <MenubarShortcut>⌘Y</MenubarShortcut>

@@ -12,6 +12,8 @@ import { Input } from "./ui/input";
 import { useFlowStore } from "@/hooks/use-flow-store";
 import { ItemNodeData } from "@/utils/item-node-data";
 import { useDisplayConfig } from "@/hooks/use-display-config";
+import { ActionFactory } from "@/factory/action-factory";
+import { useHistory } from "@/hooks/use-history";
 
 export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeData, selected: boolean, }) {
 
@@ -22,6 +24,7 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
     const itemBorders = useDisplayConfig((state) => state.itemBorders);
     const infoCards = useDisplayConfig((state) => state.infoCards);
     const contextMenus = useDisplayConfig((state) => state.contextMenus);
+    const { appendAction } = useHistory();
 
     useEffect(() => {
         setNodes((nds) =>
@@ -53,8 +56,30 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
 
     //deletion logic
     const deleteItem = useCallback(() => {
+
+        const nodes = getNodes() as Node<ItemNodeData>[];
+        const node = nodes.find(n => n.id === id);
+
         deleteElements({ nodes: [{ id: id }]});
         toast.dismiss();
+
+        let newID = "";
+        if(!node)
+            return;
+        const newNode = createNodeCopy(node);
+        newID = newNode.id;
+
+        const action = ActionFactory.Create(
+            () => {        
+                addNodes(newNode);  
+            },
+            () => {
+                deleteElements({ nodes: [{ id: newID }]});
+                toast.dismiss();
+            }
+        );
+        appendAction(action);
+
     }, [id]);
 
     //duplication logic
