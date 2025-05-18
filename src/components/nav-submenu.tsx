@@ -23,7 +23,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { ItemType } from "@/api/constants"
+import { ItemType } from "@/api/models"
 import { useCallback, useEffect, useState } from "react"
 import { ItemPreview } from "@/api/models"
 import { GetInfo, GetItems } from "@/api/api"

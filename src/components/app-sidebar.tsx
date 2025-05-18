@@ -14,7 +14,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { ItemTypes } from "@/api/constants"
+import { ItemTypes } from "@/api/models"
 
 const data = {
   navMain: [

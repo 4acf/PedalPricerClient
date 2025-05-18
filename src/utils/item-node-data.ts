@@ -1,5 +1,4 @@
-import { ItemType } from "@/api/constants"
-import { Item } from "@/api/models"
+import { Item, ItemType } from "@/api/models"
 
 export type ItemNodeData = {
     itemType: ItemType,

@@ -1,5 +1,4 @@
-import { ItemType } from "@/api/constants"
-import { Item } from "@/api/models"
+import { Item, ItemType } from "@/api/models"
 import { Node } from "@xyflow/react";
 import { ItemNodeData } from "./item-node-data";
 

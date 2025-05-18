@@ -4,7 +4,7 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
 } from "@/components/ui/sidebar"
-import { ItemType } from "@/api/constants"
+import { ItemType } from "@/api/models"
 import { NavSubmenu } from "./nav-submenu"
 
 export function NavMain({
