@@ -50,7 +50,18 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
             setRotation(0)
         else{
             const direction: number = clockwise ? 1 : -1;
-            setRotation(rotation + (90 * direction));
+            const oldRotation = rotation;
+            const newRotation = rotation + (90 * direction);
+            setRotation(newRotation);
+            const action = ActionFactory.Create(
+                () => {
+                    setRotation(oldRotation);
+                },
+                () => {
+                    setRotation(newRotation);
+                },
+            );
+            appendAction(action);
         }
     }, [rotation]);
 
