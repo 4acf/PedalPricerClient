@@ -25,6 +25,8 @@ import { useCallback } from "react";
 import { Button } from "./ui/button";
 import { PricingMain } from "./pricing-main";
 import { AboutMain } from "./about-main";
+import { useHistory } from "@/hooks/use-history";
+import { ActionFactory } from "@/factory/action-factory";
 
 const selector = (s) => {
   return {
@@ -34,10 +36,24 @@ const selector = (s) => {
 
 export function NavOptions({}) {
 
-  const { setNodes } = useReactFlow();
+  const { getNodes, setNodes } = useReactFlow();
+  const { appendAction } = useHistory();
 
   const clearCanvas = useCallback(() => {
+
+    const nodes = getNodes();
     setNodes([]);
+    
+    const action = ActionFactory.Create(
+      () => {
+        setNodes(nodes);
+      },
+      () => {
+        setNodes([]);
+      },
+    );
+    appendAction(action);
+
   }, []);
 
   const { unselectAll } = useStore(selector);
