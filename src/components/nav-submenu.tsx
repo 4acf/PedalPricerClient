@@ -55,7 +55,7 @@ export function NavSubmenu({
     const [selectedID, setSelectedID] = useState<string>("");
     const [brandOptions, setBrandOptions] = useState<BrandOption[]>([]);
     const { addNodes, deleteElements } = useReactFlow();
-    const { appendAction } = useHistory();
+    const appendAction = useHistory((state) => state.appendAction);
 
     const addItem = useCallback(async () => {
 

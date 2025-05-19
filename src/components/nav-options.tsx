@@ -37,7 +37,7 @@ const selector = (s) => {
 export function NavOptions({}) {
 
   const { getNodes, setNodes } = useReactFlow();
-  const { appendAction } = useHistory();
+  const appendAction = useHistory((state) => state.appendAction);
 
   const clearCanvas = useCallback(() => {
 

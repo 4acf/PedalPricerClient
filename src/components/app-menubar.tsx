@@ -54,7 +54,8 @@ export function AppMenubar() {
     const config = useDisplayConfig(); 
     const inputFile = useRef<HTMLInputElement>(null);
     const { addNodes } = useReactFlow();
-    const { undo, redo } = useHistory();
+    const undo = useHistory((state) => state.undo);
+    const redo = useHistory((state) => state.redo);
     const undoStack = useHistory((state) => state.undoStack);
     const redoStack = useHistory((state) => state.redoStack);
 

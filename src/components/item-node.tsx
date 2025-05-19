@@ -24,7 +24,7 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
     const itemBorders = useDisplayConfig((state) => state.itemBorders);
     const infoCards = useDisplayConfig((state) => state.infoCards);
     const contextMenus = useDisplayConfig((state) => state.contextMenus);
-    const { appendAction } = useHistory();
+    const appendAction = useHistory((state) => state.appendAction);
 
     useEffect(() => {
         setNodes((nds) =>
