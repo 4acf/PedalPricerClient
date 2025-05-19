@@ -188,7 +188,20 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
         const sanitized = input.replace(/[$,]/g, "");
         const isValidCurrency = /^\d+(\.\d{0,2})?$/.test(sanitized)
         if(isValidCurrency && sanitized !== ""){
-            setPrice(parseFloat(input));
+            const oldPrice = price;
+            const newPrice = parseFloat(input);
+            setPrice(newPrice);
+            const action = ActionFactory.Create(
+                () => {
+                    setPrice(oldPrice);
+                    toast.dismiss();
+                },
+                () => {
+                    setPrice(newPrice);
+                    toast.dismiss();
+                },
+            )
+            appendAction(action);
         }
     }
 
