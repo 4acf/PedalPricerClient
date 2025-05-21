@@ -32,6 +32,7 @@ import { createDefaultNode } from "@/utils/node-payload"
 import { ActionFactory } from "@/factory/action-factory"
 import { useHistory } from "@/hooks/use-history"
 import { toast } from "sonner"
+import { VirtualizedCombobox } from "./virtualized-combobox"
 
 type BrandOption = {
     label: string,
@@ -54,6 +55,7 @@ export function NavSubmenu({
     const [label, setLabel] = useState<string>("");
     const [selectedID, setSelectedID] = useState<string>("");
     const [brandOptions, setBrandOptions] = useState<BrandOption[]>([]);
+    const [flattenedOptions, setFlattenedOptions] = useState<ItemPreview[]>([]);
     const { addNodes, deleteElements } = useReactFlow();
     const appendAction = useHistory((state) => state.appendAction);
 
@@ -86,6 +88,7 @@ export function NavSubmenu({
             try{
                 const itemPreviewMap = new Map<string, ItemPreview[]>();
                 const itemPreviewData = await GetInfo(item.api);
+                setFlattenedOptions(itemPreviewData);
                 itemPreviewData.forEach(itemPreview => {
                     let values = itemPreviewMap.get(itemPreview.brand);
                     if (values) {
@@ -128,7 +131,7 @@ export function NavSubmenu({
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                     <SidebarMenuSub className="py-4">
-                        <Popover open={open} onOpenChange={setOpen}>
+                        {/* <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
@@ -175,7 +178,8 @@ export function NavSubmenu({
                                     </CommandList>
                                 </Command>
                             </PopoverContent>
-                        </Popover>
+                        </Popover> */}
+                        <VirtualizedCombobox options={flattenedOptions}/>
                         <Button variant="outline" className="mt-1 mb-1" onClick={addItem}>Add {item.singular}</Button>
                     </SidebarMenuSub>
                 </CollapsibleContent>
