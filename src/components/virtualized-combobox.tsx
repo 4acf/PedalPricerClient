@@ -11,7 +11,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import { ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
 
 type Option = {
@@ -20,7 +20,6 @@ type Option = {
 };
 
 interface VirtualizedCommandProps {
-  height: string;
   options: Option[];
   placeholder: string;
   selectedOption: string;
@@ -28,7 +27,6 @@ interface VirtualizedCommandProps {
 }
 
 const VirtualizedCommand = ({
-  height,
   options,
   placeholder,
   selectedOption,
@@ -43,7 +41,8 @@ const VirtualizedCommand = ({
   const virtualizer = useVirtualizer({
     count: filteredOptions.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 40,
+    estimateSize: () => 45,
+    measureElement: el => el.getBoundingClientRect().height
   });
 
   const virtualOptions = virtualizer.getVirtualItems();
@@ -114,7 +113,6 @@ const VirtualizedCommand = ({
       <CommandList
         ref={parentRef}
         style={{
-          height: height,
           width: '100%',
           overflow: 'auto',
         }}
@@ -132,6 +130,8 @@ const VirtualizedCommand = ({
           >
             {virtualOptions.map((virtualOption) => (
               <CommandItem
+                ref={virtualizer.measureElement}
+                data-index={virtualOption.index}
                 key={filteredOptions[virtualOption.index].value}
                 disabled={isKeyboardNavActive}
                 className={cn(
@@ -142,22 +142,14 @@ const VirtualizedCommand = ({
                     'aria-selected:bg-transparent aria-selected:text-primary',
                 )}
                 style={{
-                  height: `${virtualOption.size}px`,
                   transform: `translateY(${virtualOption.start}px)`,
+                  position: 'absolute',
                 }}
                 value={filteredOptions[virtualOption.index].value}
                 onMouseEnter={() => !isKeyboardNavActive && setFocusedIndex(virtualOption.index)}
                 onMouseLeave={() => !isKeyboardNavActive && setFocusedIndex(-1)}
                 onSelect={onSelectOption}
               >
-                <Check
-                  className={cn(
-                    'mr-2 h-4 w-4',
-                    selectedOption === filteredOptions[virtualOption.index].value
-                      ? 'opacity-100'
-                      : 'opacity-0',
-                  )}
-                />
                 {filteredOptions[virtualOption.index].label}
               </CommandItem>
             ))}
@@ -172,14 +164,12 @@ interface VirtualizedComboboxProps {
   options: ItemPreview[];
   searchPlaceholder?: string;
   width?: string;
-  height?: string;
 }
 
 export function VirtualizedCombobox({
   options,
   searchPlaceholder = 'Search items...',
-  width = '257px',
-  height = '254px',
+  width = '254px',
 }: VirtualizedComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [selectedOption, setSelectedOption] = React.useState('');
@@ -196,13 +186,14 @@ export function VirtualizedCombobox({
             width: width,
           }}
         >
-          {selectedOption ? options.find((option) => option.id === selectedOption)?.id : searchPlaceholder}
+          <span className="truncate opacity-50 font-normal">
+            {selectedOption ? options.find((option) => option.id === selectedOption)?.id : searchPlaceholder}
+          </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[254px] p-0" style={{ width: width }}>
         <VirtualizedCommand
-          height={height}
           options={options.map((option) => ({ value: option.id, label: `${option.brand} ${option.name}` }))}
           placeholder={searchPlaceholder}
           selectedOption={selectedOption}
