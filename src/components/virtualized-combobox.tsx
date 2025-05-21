@@ -15,6 +15,7 @@ import { ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
 
 type Option = {
+  key: string;
   value: string;
   label: string;
 };
@@ -42,7 +43,6 @@ const VirtualizedCommand = ({
     count: filteredOptions.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 45,
-    measureElement: el => el.getBoundingClientRect().height
   });
 
   const virtualOptions = virtualizer.getVirtualItems();
@@ -56,7 +56,9 @@ const VirtualizedCommand = ({
   const handleSearch = (search: string) => {
     setIsKeyboardNavActive(false);
     setFilteredOptions(
-      options.filter((option) => option.value.toLowerCase().includes(search.toLowerCase() ?? [])),
+      options.filter((option) =>
+        option.label.toLowerCase().includes(search.toLowerCase()),
+      ),
     );
   };
 
@@ -96,9 +98,8 @@ const VirtualizedCommand = ({
 
   React.useEffect(() => {
     if (selectedOption) {
-      const option = filteredOptions.find((option) => option.value === selectedOption);
-      if (option) {
-        const index = filteredOptions.indexOf(option);
+      const index = filteredOptions.findIndex((option) => option.value === selectedOption);
+      if (index !== -1) {
         setFocusedIndex(index);
         virtualizer.scrollToIndex(index, {
           align: 'center',
@@ -108,8 +109,15 @@ const VirtualizedCommand = ({
   }, [selectedOption, filteredOptions, virtualizer]);
 
   return (
-    <Command shouldFilter={false} onKeyDown={handleKeyDown}>
-      <CommandInput onValueChange={handleSearch} placeholder={placeholder} className="h-9"/>
+    <Command
+      shouldFilter={false}
+      onKeyDown={handleKeyDown}
+      filter={(value, search) => {
+        if (value.toLowerCase().includes(search.toLowerCase())) return 1;
+        return 0;
+      }}
+    >
+      <CommandInput onValueChange={handleSearch} placeholder={placeholder} />
       <CommandList
         ref={parentRef}
         style={{
@@ -132,7 +140,7 @@ const VirtualizedCommand = ({
               <CommandItem
                 ref={virtualizer.measureElement}
                 data-index={virtualOption.index}
-                key={filteredOptions[virtualOption.index].value}
+                key={filteredOptions[virtualOption.index].key}
                 disabled={isKeyboardNavActive}
                 className={cn(
                   'absolute left-0 top-0 w-full bg-transparent',
@@ -174,6 +182,8 @@ export function VirtualizedCombobox({
   const [open, setOpen] = React.useState(false);
   const [selectedOption, setSelectedOption] = React.useState('');
 
+  const selectedItem = options.find((option) => option.id === selectedOption);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -182,19 +192,23 @@ export function VirtualizedCombobox({
           role="combobox"
           aria-expanded={open}
           className="justify-between overflow-hidden"
-          style={{
-            width: width,
-          }}
+          style={{ width }}
         >
           <span className="truncate opacity-50 font-normal">
-            {selectedOption ? options.find((option) => option.id === selectedOption)?.id : searchPlaceholder}
+            {selectedItem
+              ? `${selectedItem.brand} ${selectedItem.name}`
+              : searchPlaceholder}
           </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[254px] p-0" style={{ width: width }}>
+      <PopoverContent className="w-[254px] p-0" style={{ width }}>
         <VirtualizedCommand
-          options={options.map((option) => ({ value: option.id, label: `${option.brand} ${option.name}` }))}
+          options={options.map((option) => ({
+            key: option.id,
+            value: option.id,
+            label: `${option.brand} ${option.name}`,
+          }))}
           placeholder={searchPlaceholder}
           selectedOption={selectedOption}
           onSelectOption={(currentValue) => {
