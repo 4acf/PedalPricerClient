@@ -1,5 +1,8 @@
+//this is a modified version of 
+//https://github.com/oaarnikoivu/shadcn-virtualized-combobox
+
 import { GetItems } from '@/api/api';
-import { ItemPreview, ItemType } from '@/api/models';
+import { ItemType } from '@/api/models';
 import { Button } from '@/components/ui/button';
 import {
   Command,
