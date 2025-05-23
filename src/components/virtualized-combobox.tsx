@@ -221,7 +221,12 @@ export function VirtualizedCombobox({
             className="justify-between overflow-hidden"
             style={{ width }}
           >
-            <span className="truncate opacity-50 font-normal">
+            <span 
+              className={cn(
+                "truncate opacity-50 font-normal",
+                selectedOption !== "" && "opacity-100",
+              )}
+            >
               {selectedItem
                 ? `${selectedItem.brand} ${selectedItem.name}`
                 : searchPlaceholder}
