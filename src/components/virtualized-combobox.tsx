@@ -1,4 +1,5 @@
-import { ItemPreview } from '@/api/models';
+import { GetItems } from '@/api/api';
+import { ItemPreview, ItemType } from '@/api/models';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -9,10 +10,15 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ActionFactory } from '@/factory/action-factory';
+import { useHistory } from '@/hooks/use-history';
 import { cn } from '@/lib/utils';
+import { createDefaultNode } from '@/utils/node-payload';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { useReactFlow } from '@xyflow/react';
 import { ChevronsUpDown } from 'lucide-react';
-import * as React from 'react';
+import { useCallback, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 type Option = {
   key: string;
@@ -23,21 +29,19 @@ type Option = {
 interface VirtualizedCommandProps {
   options: Option[];
   placeholder: string;
-  selectedOption: string;
   onSelectOption?: (option: string) => void;
 }
 
 const VirtualizedCommand = ({
   options,
   placeholder,
-  selectedOption,
   onSelectOption,
 }: VirtualizedCommandProps) => {
-  const [filteredOptions, setFilteredOptions] = React.useState<Option[]>(options);
-  const [focusedIndex, setFocusedIndex] = React.useState(0);
-  const [isKeyboardNavActive, setIsKeyboardNavActive] = React.useState(false);
+  const [filteredOptions, setFilteredOptions] = useState<Option[]>(options);
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const [isKeyboardNavActive, setIsKeyboardNavActive] = useState(false);
 
-  const parentRef = React.useRef(null);
+  const parentRef = useRef(null);
 
   const virtualizer = useVirtualizer({
     count: filteredOptions.length,
@@ -95,18 +99,6 @@ const VirtualizedCommand = ({
         break;
     }
   };
-
-  React.useEffect(() => {
-    if (selectedOption) {
-      const index = filteredOptions.findIndex((option) => option.value === selectedOption);
-      if (index !== -1) {
-        setFocusedIndex(index);
-        virtualizer.scrollToIndex(index, {
-          align: 'center',
-        });
-      }
-    }
-  }, [selectedOption, filteredOptions, virtualizer]);
 
   return (
     <Command
@@ -169,54 +161,88 @@ const VirtualizedCommand = ({
 };
 
 interface VirtualizedComboboxProps {
+  api: ItemType,
+  singular: string,
   options: ItemPreview[];
   searchPlaceholder?: string;
   width?: string;
 }
 
 export function VirtualizedCombobox({
+  api,
+  singular,
   options,
   searchPlaceholder = 'Search items...',
   width = '254px',
 }: VirtualizedComboboxProps) {
-  const [open, setOpen] = React.useState(false);
-  const [selectedOption, setSelectedOption] = React.useState('');
+  const [open, setOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+  const { addNodes, deleteElements } = useReactFlow();
+  const appendAction = useHistory((state) => state.appendAction);
 
   const selectedItem = options.find((option) => option.id === selectedOption);
 
+  const addItem = useCallback(async () => {
+  
+    console.log(selectedOption)
+
+    if(selectedOption === "")
+        return;
+
+    const items = await GetItems(api, [selectedOption]);
+    items.forEach(element => {
+        const newNode = createDefaultNode(element, api);
+        addNodes(newNode);
+        const action = ActionFactory.Create(
+            () => {
+                const id = newNode.id;
+                deleteElements({ nodes: [{ id: id }]});
+                toast.dismiss();
+            },
+            () => {
+                addNodes(newNode);  
+            }
+        );
+        appendAction(action);
+    });
+  
+  }, [selectedOption]);
+
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="justify-between overflow-hidden"
-          style={{ width }}
-        >
-          <span className="truncate opacity-50 font-normal">
-            {selectedItem
-              ? `${selectedItem.brand} ${selectedItem.name}`
-              : searchPlaceholder}
-          </span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[254px] p-0" style={{ width }}>
-        <VirtualizedCommand
-          options={options.map((option) => ({
-            key: option.id,
-            value: option.id,
-            label: `${option.brand} ${option.name}`,
-          }))}
-          placeholder={searchPlaceholder}
-          selectedOption={selectedOption}
-          onSelectOption={(currentValue) => {
-            setSelectedOption(currentValue === selectedOption ? '' : currentValue);
-            setOpen(false);
-          }}
-        />
-      </PopoverContent>
-    </Popover>
+    <div className="py-4">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="justify-between overflow-hidden"
+            style={{ width }}
+          >
+            <span className="truncate opacity-50 font-normal">
+              {selectedItem
+                ? `${selectedItem.brand} ${selectedItem.name}`
+                : searchPlaceholder}
+            </span>
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[254px] p-0" style={{ width }}>
+          <VirtualizedCommand
+            options={options.map((option) => ({
+              key: option.id,
+              value: option.id,
+              label: `${option.brand} ${option.name}`,
+            }))}
+            placeholder={searchPlaceholder}
+            onSelectOption={(currentValue) => {
+              setSelectedOption(currentValue === selectedOption ? '' : currentValue);
+              setOpen(false);
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+      <Button variant="outline" className="mt-1 mb-1 w-[254px] mt-2" onClick={addItem}>Add {singular}</Button>
+    </div>
   );
 }
