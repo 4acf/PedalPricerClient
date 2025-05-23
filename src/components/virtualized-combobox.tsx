@@ -19,11 +19,13 @@ import { useReactFlow } from '@xyflow/react';
 import { ChevronsUpDown } from 'lucide-react';
 import { useCallback, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { ModifiedItemPreview } from './nav-submenu';
 
 type Option = {
   key: string;
   value: string;
   label: string;
+  disabled: boolean,
 };
 
 interface VirtualizedCommandProps {
@@ -90,7 +92,7 @@ const VirtualizedCommand = ({
       }
       case 'Enter': {
         event.preventDefault();
-        if (filteredOptions[focusedIndex]) {
+        if (filteredOptions[focusedIndex] && !filteredOptions[focusedIndex].disabled) {
           onSelectOption?.(filteredOptions[focusedIndex].value);
         }
         break;
@@ -133,10 +135,12 @@ const VirtualizedCommand = ({
                 ref={virtualizer.measureElement}
                 data-index={virtualOption.index}
                 key={filteredOptions[virtualOption.index].key}
-                disabled={isKeyboardNavActive}
+                disabled={filteredOptions[virtualOption.index].disabled}
                 className={cn(
                   'absolute left-0 top-0 w-full bg-transparent',
-                  focusedIndex === virtualOption.index && 'bg-accent text-accent-foreground',
+                  filteredOptions[virtualOption.index].disabled && 'text-xs',
+                  filteredOptions[virtualOption.index].disabled && virtualOption.index !== 0 && 'pt-4',
+                  focusedIndex === virtualOption.index && !filteredOptions[virtualOption.index].disabled && 'bg-accent text-accent-foreground',
                   isKeyboardNavActive &&
                     focusedIndex !== virtualOption.index &&
                     'aria-selected:bg-transparent aria-selected:text-primary',
@@ -163,7 +167,7 @@ const VirtualizedCommand = ({
 interface VirtualizedComboboxProps {
   api: ItemType,
   singular: string,
-  options: ItemPreview[];
+  options: ModifiedItemPreview[];
   searchPlaceholder?: string;
   width?: string;
 }
@@ -183,8 +187,6 @@ export function VirtualizedCombobox({
   const selectedItem = options.find((option) => option.id === selectedOption);
 
   const addItem = useCallback(async () => {
-  
-    console.log(selectedOption)
 
     if(selectedOption === "")
         return;
@@ -233,6 +235,7 @@ export function VirtualizedCombobox({
               key: option.id,
               value: option.id,
               label: `${option.brand} ${option.name}`,
+              disabled: option.disabled,
             }))}
             placeholder={searchPlaceholder}
             onSelectOption={(currentValue) => {

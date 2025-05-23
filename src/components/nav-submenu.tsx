@@ -15,9 +15,8 @@ import { ItemPreview } from "@/api/models"
 import { GetInfo } from "@/api/api"
 import { VirtualizedCombobox } from "./virtualized-combobox"
 
-type BrandOption = {
-    label: string,
-    options: ItemPreview[],
+export type ModifiedItemPreview = ItemPreview & {
+    disabled: boolean,
 }
 
 export function NavSubmenu({
@@ -32,15 +31,13 @@ export function NavSubmenu({
     }
 }) {
 
-    const [brandOptions, setBrandOptions] = useState<BrandOption[]>([]);
-    const [flattenedOptions, setFlattenedOptions] = useState<ItemPreview[]>([]);
+    const [flattenedOptions, setFlattenedOptions] = useState<ModifiedItemPreview[]>([]);
 
     useEffect(() => {
         const GetItemPreviews = async () => {
             try{
                 const itemPreviewMap = new Map<string, ItemPreview[]>();
                 const itemPreviewData = await GetInfo(item.api);
-                setFlattenedOptions(itemPreviewData);
                 itemPreviewData.forEach(itemPreview => {
                     let values = itemPreviewMap.get(itemPreview.brand);
                     if (values) {
@@ -50,14 +47,24 @@ export function NavSubmenu({
                         itemPreviewMap.set(itemPreview.brand, [itemPreview]);
                     }
                 });
-                const groupedOptions: BrandOption[] = [];
+                const groupedOptions: ModifiedItemPreview[] = [];
                 for (const [key, value] of itemPreviewMap){
                     groupedOptions.push({
-                        label: key,
-                        options: value
-                    })
+                        id: key,
+                        brand: key,
+                        name: "",
+                        disabled: true,
+                    });
+                    value.forEach((option) => {
+                        groupedOptions.push({
+                            id: option.id,
+                            brand: option.brand,
+                            name: option.name,
+                            disabled: false,
+                        })
+                    });
                 }
-                setBrandOptions(groupedOptions);
+                setFlattenedOptions(groupedOptions);
             }   
             catch (error){
                 console.error(error);
