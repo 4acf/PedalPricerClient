@@ -56,8 +56,7 @@ export function AppMenubar() {
     const { addNodes } = useReactFlow();
     const undo = useHistory((state) => state.undo);
     const redo = useHistory((state) => state.redo);
-    const undoStack = useHistory((state) => state.undoStack);
-    const redoStack = useHistory((state) => state.redoStack);
+    const { undoStack, redoStack } = useHistory();
 
     const openFileDialog = useCallback(() => {
         if(!inputFile || !inputFile.current)

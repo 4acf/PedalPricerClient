@@ -1,5 +1,4 @@
 import { ChevronRight, type LucideIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import {
   Collapsible,
   CollapsibleContent,
@@ -10,32 +9,14 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from "@/components/ui/sidebar"
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
 import { ItemType } from "@/api/models"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { ItemPreview } from "@/api/models"
-import { GetInfo, GetItems } from "@/api/api"
-import { useReactFlow } from "@xyflow/react"  
-import { createDefaultNode } from "@/utils/node-payload"
-import { ActionFactory } from "@/factory/action-factory"
-import { useHistory } from "@/hooks/use-history"
-import { toast } from "sonner"
+import { GetInfo } from "@/api/api"
+import { VirtualizedCombobox } from "./virtualized-combobox"
 
-type BrandOption = {
-    label: string,
-    options: ItemPreview[],
+export type ModifiedItemPreview = ItemPreview & {
+    disabled: boolean,
 }
 
 export function NavSubmenu({
@@ -50,36 +31,7 @@ export function NavSubmenu({
     }
 }) {
 
-    const [open, setOpen] = useState<boolean>(false);
-    const [label, setLabel] = useState<string>("");
-    const [selectedID, setSelectedID] = useState<string>("");
-    const [brandOptions, setBrandOptions] = useState<BrandOption[]>([]);
-    const { addNodes, deleteElements } = useReactFlow();
-    const appendAction = useHistory((state) => state.appendAction);
-
-    const addItem = useCallback(async () => {
-
-        if(selectedID === "")
-            return;
-
-        const items = await GetItems(item.api, [selectedID]);
-        items.forEach(element => {
-            const newNode = createDefaultNode(element, item.api);
-            addNodes(newNode);
-            const action = ActionFactory.Create(
-                () => {
-                    const id = newNode.id;
-                    deleteElements({ nodes: [{ id: id }]});
-                    toast.dismiss();
-                },
-                () => {
-                    addNodes(newNode);  
-                }
-            );
-            appendAction(action);
-        });
-
-    }, [selectedID]);
+    const [flattenedOptions, setFlattenedOptions] = useState<ModifiedItemPreview[]>([]);
 
     useEffect(() => {
         const GetItemPreviews = async () => {
@@ -95,14 +47,24 @@ export function NavSubmenu({
                         itemPreviewMap.set(itemPreview.brand, [itemPreview]);
                     }
                 });
-                const groupedOptions: BrandOption[] = [];
+                const groupedOptions: ModifiedItemPreview[] = [];
                 for (const [key, value] of itemPreviewMap){
                     groupedOptions.push({
-                        label: key,
-                        options: value
-                    })
+                        id: key,
+                        brand: key,
+                        name: "",
+                        disabled: true,
+                    });
+                    value.forEach((option) => {
+                        groupedOptions.push({
+                            id: option.id,
+                            brand: option.brand,
+                            name: option.name,
+                            disabled: false,
+                        })
+                    });
                 }
-                setBrandOptions(groupedOptions);
+                setFlattenedOptions(groupedOptions);
             }   
             catch (error){
                 console.error(error);
@@ -127,56 +89,8 @@ export function NavSubmenu({
                     </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                    <SidebarMenuSub className="py-4">
-                        <Popover open={open} onOpenChange={setOpen}>
-                        <PopoverTrigger asChild>
-                            <Button
-                                variant="outline"
-                                role="combobox"
-                                aria-expanded={open}
-                                className="w-[254px] justify-between overflow-hidden"
-                            >
-                                <span className="truncate opacity-50 font-normal">
-                                    {
-                                        label ? label
-                                        : "Select..."
-                                    }
-                                </span>
-                                <ChevronRight className="opacity-25 shrink-0 ml-2" />
-                            </Button>
-                        </PopoverTrigger>
-                            <PopoverContent className="w-[254px] p-0">
-                                <Command
-                                    filter={(value, search) => {
-                                        if (value.toLowerCase().includes(search.toLowerCase())) return 1;
-                                        return 0;
-                                    }}
-                                >
-                                    <CommandInput placeholder="Search items..." className="h-9" />
-                                    <CommandList>
-                                        <CommandEmpty>No items found.</CommandEmpty>
-                                        {brandOptions.map((brandOption) => (
-                                            <CommandGroup heading={brandOption.label} key={brandOption.label}>
-                                            {brandOption.options.map((option) => (
-                                                <CommandItem
-                                                    key={option.id}
-                                                    value={`${option.brand} ${option.name}`}
-                                                    onSelect={(currentValue) => {
-                                                        setLabel(currentValue === label ? "" : `${option.brand} ${option.name}`)
-                                                        setSelectedID(currentValue === label ? "" : option.id)
-                                                        setOpen(false)
-                                                    }}
-                                                >
-                                                {option.brand} {option.name}
-                                                </CommandItem>
-                                            ))}
-                                            </CommandGroup>
-                                        ))}
-                                    </CommandList>
-                                </Command>
-                            </PopoverContent>
-                        </Popover>
-                        <Button variant="outline" className="mt-1 mb-1" onClick={addItem}>Add {item.singular}</Button>
+                    <SidebarMenuSub>
+                        <VirtualizedCombobox api={item.api} options={flattenedOptions} singular={item.singular}/>
                     </SidebarMenuSub>
                 </CollapsibleContent>
             </SidebarMenuItem>
