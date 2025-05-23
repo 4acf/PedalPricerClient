@@ -237,7 +237,7 @@ export function VirtualizedCombobox({
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[254px] p-0" style={{ width }} onOpenAutoFocus={(e) => e.preventDefault()}>
+        <PopoverContent className="w-[254px] p-0" style={{ width }}>
           <VirtualizedCommand
             options={options.map((option) => ({
               key: option.id,
