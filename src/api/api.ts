@@ -1,5 +1,5 @@
-import { baseUrl, ItemType } from "./constants";
-import { Item, ItemPreview } from "./models";
+import { baseUrl } from "./constants";
+import { Item, ItemPreview, ItemType } from "./models";
 
 export const GetInfo = async (itemType: ItemType) : Promise<ItemPreview[]> => {
 
@@ -19,28 +19,17 @@ export const GetInfo = async (itemType: ItemType) : Promise<ItemPreview[]> => {
 
 }
 
-//the ui components are not set up for this currently, but the api is set up for passing in multiple IDs at a time
-export const GetItems = async (itemType: ItemType, IDs: string[]) : Promise<Item[]> => {
-
-    let concatenatedIDs: string = "";
-    for(const ID of IDs){
-        concatenatedIDs += `${ID},`;
-    }
-    concatenatedIDs = concatenatedIDs.slice(0, -1);
-
-    const params = new URLSearchParams({
-        rawIDs: concatenatedIDs,
-    });
+export const GetItem = async (itemType: ItemType, id: string) : Promise<Item> => {
 
     try{
-        const response: Response = await fetch(`${baseUrl}/${itemType}?${params}`, {
+        const response: Response = await fetch(`${baseUrl}/${itemType}/${id}`, {
             method: "GET"
         });
         if(!response.ok){
             throw new Error(`${response.status} error: ${response.statusText}`);
         }
         const data = await response.json();
-        return data as Item[];
+        return data as Item;
     }
     catch (error){
         throw error;

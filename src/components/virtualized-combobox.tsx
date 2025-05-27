@@ -1,7 +1,7 @@
 //this is a modified version of 
 //https://github.com/oaarnikoivu/shadcn-virtualized-combobox
 
-import { GetItems } from '@/api/api';
+import { GetItem } from '@/api/api';
 import { ItemType } from '@/api/models';
 import { Button } from '@/components/ui/button';
 import {
@@ -194,22 +194,20 @@ export function VirtualizedCombobox({
     if(selectedOption === "")
         return;
 
-    const items = await GetItems(api, [selectedOption]);
-    items.forEach(element => {
-        const newNode = createDefaultNode(element, api);
-        addNodes(newNode);
-        const action = ActionFactory.Create(
-            () => {
-                const id = newNode.id;
-                deleteElements({ nodes: [{ id: id }]});
-                toast.dismiss();
-            },
-            () => {
-                addNodes(newNode);  
-            }
-        );
-        appendAction(action);
-    });
+    const item = await GetItem(api, selectedOption);
+    const newNode = createDefaultNode(item, api);
+      addNodes(newNode);
+      const action = ActionFactory.Create(
+          () => {
+              const id = newNode.id;
+              deleteElements({ nodes: [{ id: id }]});
+              toast.dismiss();
+          },
+          () => {
+              addNodes(newNode);  
+          }
+      );
+      appendAction(action);
   
   }, [selectedOption]);
 

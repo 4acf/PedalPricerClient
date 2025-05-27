@@ -21,7 +21,7 @@ function App() {
           fontSize: '1.5rem',
         }}
       >
-        🚫 This app is currently only supported on desktop browsers. Please switch to a desktop device.
+        🚫 Screen width too small. Please switch to a desktop device or rotate device.
       </div>
     )
   }
