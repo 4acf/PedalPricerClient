@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useReactFlow, useStore } from "@xyflow/react"
+import { ReactFlowState, useReactFlow, useStore } from "@xyflow/react"
 import {
   Sheet,
   SheetClose,
@@ -28,7 +28,7 @@ import { AboutMain } from "./about-main";
 import { useHistory } from "@/hooks/use-history";
 import { ActionFactory } from "@/factory/action-factory";
 
-const selector = (s) => {
+const selector = (s: ReactFlowState) => {
   return {
     unselectAll: s.unselectNodesAndEdges
   };
@@ -58,6 +58,10 @@ export function NavOptions({}) {
 
   const { unselectAll } = useStore(selector);
 
+  const unselector = () => {
+    unselectAll();
+  }
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Options</SidebarGroupLabel>
@@ -65,7 +69,7 @@ export function NavOptions({}) {
         <SidebarMenuItem key="Clear Canvas">
           <Sheet>
             <SheetTrigger asChild>
-              <SidebarMenuButton onClick={unselectAll}  
+              <SidebarMenuButton onClick={unselector}  
                 className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#ff6363]"
               >
                 <Trash2 />
@@ -93,7 +97,7 @@ export function NavOptions({}) {
         <SidebarMenuItem key="Pricing">
           <Sheet>
             <SheetTrigger asChild>
-              <SidebarMenuButton onClick={unselectAll}
+              <SidebarMenuButton onClick={unselector}
                 className="cursor-pointer transition-colors duration-150 ease-in-out hover:text-[#00e68a] "
               >
                 <DollarSign />
@@ -108,7 +112,7 @@ export function NavOptions({}) {
         <SidebarMenuItem key="About">
           <Sheet>
             <SheetTrigger asChild>
-              <SidebarMenuButton onClick={unselectAll}
+              <SidebarMenuButton onClick={unselector}
                 className="cursor-pointer transition-colors duration-150 ease-in-out"
               >
                 <Info />
