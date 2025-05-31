@@ -24,7 +24,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useStore } from "@xyflow/react"
+import { ReactFlowState, useStore } from "@xyflow/react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -254,7 +254,7 @@ function Sidebar({
   )
 }
 
-const selector = (s) => {
+const selector = (s: ReactFlowState) => {
   return {
     unselectAll: s.unselectNodesAndEdges
   };
