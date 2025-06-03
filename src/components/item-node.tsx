@@ -222,11 +222,11 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
                         (selected && itemBorders) ? 'hover:border-[#3f85eb]' : itemBorders && 'hover:border-[rgb(63,133,235,0.5)]',
                     )}
                     style={{
-                        transform: mounted ? `rotate(${rotation}deg) translate3d(0,0,0)` : undefined,
+                        transform: mounted ? `rotate(${rotation}deg)` : undefined,
                         transition: '0.3s',
                         backfaceVisibility: "hidden",
                         WebkitBackfaceVisibility: "hidden",
-                        WebkitTransform: "translate3d(0,0,0)",
+                        willChange: 'transform',
                     }}
                     onClick={() => infoCards && toast(`${item.brand} ${item.name}`, {
                         duration: Infinity,
