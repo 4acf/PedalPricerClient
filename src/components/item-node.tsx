@@ -21,10 +21,15 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
     const setNodes = useFlowStore((state) => state.setNodes);
     const [rotation, setRotation] = useState<number>(data.rotation);
     const [price, setPrice] = useState<number>(data.price);
+    const [mounted, setMounted] = useState<boolean>(false);
     const itemBorders = useDisplayConfig((state) => state.itemBorders);
     const infoCards = useDisplayConfig((state) => state.infoCards);
     const contextMenus = useDisplayConfig((state) => state.contextMenus);
     const appendAction = useHistory((state) => state.appendAction);
+
+    useEffect(() => {
+        setMounted(true);
+    },[]);
 
     useEffect(() => {
         setNodes((nds) =>
@@ -217,7 +222,7 @@ export function ItemNode({ id, data, selected, } : { id: string, data: ItemNodeD
                         (selected && itemBorders) ? 'hover:border-[#3f85eb]' : itemBorders && 'hover:border-[rgb(63,133,235,0.5)]',
                     )}
                     style={{
-                        transform: `rotate(${rotation}deg) translate3d(0,0,0)`,
+                        transform: mounted ? `rotate(${rotation}deg) translate3d(0,0,0)` : undefined,
                         transition: '0.3s',
                         backfaceVisibility: "hidden",
                         WebkitBackfaceVisibility: "hidden",
