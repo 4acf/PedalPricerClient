@@ -14,6 +14,13 @@ import { useEffect, useState } from "react"
 import { ItemPreview } from "@/api/models"
 import { GetInfo } from "@/api/api"
 import { VirtualizedCombobox } from "./virtualized-combobox"
+import { ReactFlowState, useStore } from "@xyflow/react"
+
+const selector = (s: ReactFlowState) => {
+  return {
+    unselectAll: s.unselectNodesAndEdges
+  };
+};
 
 export type ModifiedItemPreview = ItemPreview & {
     disabled: boolean,
@@ -73,12 +80,19 @@ export function NavSubmenu({
         GetItemPreviews();
     },[]);
 
+    const { unselectAll } = useStore(selector);
+
+    const unselector = () => {
+        unselectAll();
+    }
+
     return (
         <Collapsible
             key={item.title}
             asChild
             defaultOpen={item.isActive}
             className="group/collapsible"
+            onClick={unselector}
         >
             <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
